@@ -1,83 +1,69 @@
-var request = require('request'),
+var orm = require('./orm.js'),
 	$ = require('jquery'),
-	restify = require('restify');
+	_ = require('underscore'),
+	request = require('request');
 	
-var server = restify.createServer();
-server.use(restify.bodyParser());
-
-server.post('/fetch/:url', function(req, res, next) {
-	req.params = req.body;
-	handleScrapRequest(req, res, next);
-});
-server.get('/fetch/:url', handleScrapRequest);
-
-server.listen(12345);
-
-function handleScrapRequest(req, res, next) {
-	var uri = decodeURIComponent(req.params.url);
-	res.charSet('UTF-8');
-
-	scrapUrl(uri)
-		.done(function(paragraphs) {
-			res.send({ success : true, url : uri, paragraphs: $.map(paragraphs, function(p) { return $(p).text(); }) });
-		})
-		.fail(function(cause) {
-			res.send({ success : false, url : uri, errors : [cause] });
-		})
-		.always(function() {
-			next();
-		});
+var Link = orm.Link,
+	rssFeeds = ['http://feeds.finance.yahoo.com/rss/2.0/headline?s=yhoo&region=US&lang=en-US'],
+	links = [],
+	maxLen = 100;
 	
-	next();
-};
+fetchFeeds();
 	
-function scrapUrl(url) {
-	var fetchDeferred = $.Deferred(),
-		$fetch = fetchDeferred.promise(),
-		fctDeferred = $.Deferred(),
-		$promise = fctDeferred.promise();
+function fetchFeeds() {
+	_.each(rssFeeds, function(feed) {
+		console.log('fetch : ', feed);
 
-	$fetch.done(function(body) {
-		var $body = $(body),
-			paragraphs = $body.find('p'),
-			$paragraphs = null,
-			maxParagraphsInElement  = 0;
-		
-		paragraphs.each(function(i, p) {
-			var $p = $(p),
-				$parent = $p.parent(),
-				$paragraphsInParent = $parent.find('p'),
-				paragraphsInParent = $paragraphsInParent.length;
-			
-			if(paragraphsInParent > maxParagraphsInElement) {
-				$paragraphs = $paragraphsInParent;
-				maxParagraphsInElement = paragraphsInParent
+		request(feed, function(error, response, body) {
+			if(!error && response.statusCode == 200) {
+				handleRssFeed(body);
+				
+				setTimeout(fetchFeeds, 10000);
+			} else {
+				console.log('got error !', error);
 			}
 		});
+	});		
+};
+	
+function pushToDb(href, title) {
+	Link.sync().success(function() {
+		Link.create({ 
+			status: 0, 
+			link : href,
+			title : title			
+		});
+	});
+};
+	
+function handleRssFeed(body) {
+	var $body = $(body);
+	
+	$body.find('item').each(function(i, item) {
+		var $item = $(item),
+			title = $item.find('title').text(),
+			href = $item.find('link').text();
 		
-		if(maxParagraphsInElement == 0) {
-			fctDeferred.reject();
-		} else {
-			fctDeferred.resolve($paragraphs);
+		if(!_.contains(links, href)) {
+			pushToDb(getArticleLink(href), title);
+			
+			if(links.length >= maxLen) {
+				links = links.reverse();
+				links.pop();
+				links = links.reverse();
+			}
+			
+			links.push(href);
 		}
 	});
+};
 
-	$fetch.fail(function(error) {
-		fctDeferred.reject(error);
-	});
-		
-	if(!url) {
-		fctDeferred.reject('invalid url');
-	} else {
-		request(url, function(error, response, body) {
-			if(!error && response.statusCode == 200) {
-				fetchDeferred.resolve(body);
-			} else {
-				fetchDeferred.reject(error);
-			}
-		});
+function getArticleLink(href) {
+	var separator = href.indexOf('*');
+
+	if(separator && separator < href.length) {
+		href = href.substring(separator + 1);
 	}
 	
-	return $promise;
+	return href;
 };
-	
