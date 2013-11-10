@@ -1,0 +1,14 @@
+ <table class="table table-striped">
+	<tr>
+		<th>ID</th>
+		<th>Text</th>
+		<th>Status</th>
+		<th></th>
+	</tr>
+	<tr ng:repeat="par in pars">
+		<td>{{par.id}}</td>
+		<td>{{par.text}}</td>
+		<td>{{par.status}}</td>
+		<td><button class="btn btn-default">Send to crowd sourcing</button></td>
+	</tr>
+ </table>

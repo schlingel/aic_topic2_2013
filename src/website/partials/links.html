@@ -1,0 +1,14 @@
+<table class="table table-striped">
+	<tr>
+		<th>ID</th>
+		<th>Name</th>
+		<th>Status</th>
+		<th></th>
+	</tr>
+	<tr ng:repeat="link in links">
+		<td>{{link.id}}</td>
+		<td>{{link.title}}</td>
+		<td>{{link.status}}</td>
+		<td><button class="btn btn-default" ng-click="gotoArticles(link)">Related Tasks</button></td>
+	</tr>
+</table>

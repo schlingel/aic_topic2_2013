@@ -7,6 +7,13 @@ var orm = require('./orm.js'),
 	
 var server = restify.createServer();
 server.use(restify.bodyParser());
+server.use(cors);
+
+function cors(req,res,next){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    return next();
+};
 
 server.get('/articles/', function(req, res, next) {
 	Link.findAll().success(function(links) {

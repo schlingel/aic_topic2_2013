@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html ng-app="tasks">
+	<head>
+		<title></title>
+		<script src="js/jquery-1.10.2.min.js" type="text/javascript"></script>
+		<script src="js/angular.js" type="text/javascript"></script>
+		<script src="js/angular-route.js" type="text/javascript"></script>
+		<script src="js/angular-sanitize.js" type="text/javascript"></script>
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="js/app.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/app.css">
+	</head>
+	<body>
+		<div ng-view>
+			{{$route.current.template}}
+		</div>
+	</body>
+</html>
