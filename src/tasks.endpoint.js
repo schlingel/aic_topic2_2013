@@ -9,11 +9,20 @@ var server = restify.createServer();
 server.use(restify.bodyParser());
 server.use(cors);
 
+var serverCfg = {
+	url : 'http://localhost',
+	port : 12345
+};
+
 function cors(req,res,next){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     return next();
 };
+
+server.get('/result/:taskId', function(req, res, next) {
+	var taskId = req.params.taskId;
+});
 
 server.get('/articles/', function(req, res, next) {
 	Link.findAll().success(function(links) {
@@ -28,17 +37,38 @@ server.get('/articles/', function(req, res, next) {
 });
 
 server.get('/pars/:id', function(req, res, next) {
-	var linkId = req.params.id;
+	var linkId = req.params.id,
+		linkDeferred = $.Deferred(),
+		parDeferred = $.Deferred();
 	
-	Paragraph.findAll({ where : { link_id : linkId }}).success(function(pars) {
-			res.charSet('UTF-8');
-			res.send({
-				success : true,
-				pars : $.map(pars, function(par) { return par.dataValues; })
-			});
-			
-			next();
+	Paragraph.findAll({ where : { link_id : linkId }}).success(function(pars) {			
+		var result = {
+			success : true,
+			pars : $.map(pars, function(par) { return par.dataValues; })
+		};
+		
+		parDeferred.resolve(result);
+	});
+	
+	Link.find({ where : { id : linkId }}).success(function(link) {
+		var result = {
+			success : true,
+			article : link.dataValues
+		};
+		
+		linkDeferred.resolve(result);
+	});
+	
+	$.when(linkDeferred.promise(), parDeferred.promise()).done(function(link, pars) {
+		res.charSet('UTF-8');
+		res.send({
+			success : link.success && pars.success,
+			pars : pars.pars,
+			article : link.article
+		});
+	
+		next();
 	});
 });
 
-server.listen(12345);
+server.listen(serverCfg.port);

@@ -1,5 +1,5 @@
-var linksUrl = 'http://tasks.dev:12345/articles',
-	parsUrl = 'http://tasks.dev:12345/pars/:id';
+var linksUrl = 'http://localhost:12345/articles',
+	parsUrl = 'http://localhost:12345/pars/:id';
  
  angular.module('tasks', ['ngRoute', 'ngSanitize']).config(function($routeProvider) {
 	$routeProvider
@@ -31,6 +31,7 @@ var linksUrl = 'http://tasks.dev:12345/articles',
  };
  
  ParsCtrl.$inject = ['$scope', '$http', '$route', '$location', '$routeParams'];
+ 
  function ParsCtrl($scope, $http, $route, $location, $routeParams) {
 	$scope.$route = $route;
 	$scope.pars = [];
@@ -40,6 +41,7 @@ var linksUrl = 'http://tasks.dev:12345/articles',
 		
 		$http.get(url).success(function(result) {
 			if(result && result.success) {
+				$scope.name = result.article.title;
 				$scope.pars = result.pars;
 			}
 		});

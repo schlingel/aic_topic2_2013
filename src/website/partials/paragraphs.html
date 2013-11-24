@@ -1,3 +1,26 @@
+ <h2>{{name}}</h2>
+ <div class="row">
+	<table class="table table-striped">
+		<tr>
+			<th>Companies</th>
+			<th>Products</th>
+		</tr>
+		<tr>
+			<td><span ng:repeat="company in result.companies">{{company.name}}</span></td>
+			<td><span ng:repeat="product in result.products">{{product}}</span></td>
+		</tr>
+	</table>
+ </div>
+ <div class="row article-controls">
+	<div class="col-xs-8">Identify products and companies.</div>
+	<div class="col-xs-4">
+		<button class="btn btn-default">Send to crowd sourcing</button>
+	</div>
+ </div>
+ <div class="row article-controls">
+	<div class="col-xs-8">Send all paragraphs to crowd sourcing</div>
+	<div class="col-xs-4"><button class="btn btn-default">Send all paragraphs</button></div>
+ </div>
  <table class="table table-striped">
 	<tr>
 		<th>ID</th>
