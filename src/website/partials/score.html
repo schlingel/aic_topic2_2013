@@ -1,0 +1,19 @@
+<div class="alert alert-info">
+	<strong>Overall score: </strong>{{score}}<br />
+	<strong>Meta data</strong><br />
+	Invalid scores: {{invalidScores.length}}
+	Valid scores: {{scores.length}}
+</div>
+<div>
+	<h2>Single scores</h2>
+	<table class="table table-striped">
+		<tr>
+			<td>ID</td>
+			<td>Score</td>
+		</tr>
+		<tr ng:repeat="score in scores">
+			<td>{{score.id}}</td>
+			<td>{{score.score}}</td>
+		</tr>
+	</table>
+</div>

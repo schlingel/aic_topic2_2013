@@ -38,38 +38,44 @@ var Result = sequelize.define('result', {
 		name : Sequelize.TEXT
 	});
 	
-var JobsMapping = sequelize.define('jobmapping', {
-		link_id : {
-			type : Sequelize.INTEGER,
-			references : 'link',
-			referencesKey : 'id'
-		}, 
-		result_id : {
-			type : Sequelize.INTEGER,
-			references : 'link',
-			referencesKey : 'id'
-		},
-		job_id : Sequelize.INTEGER
-});
+var Job = sequelize.define('job', {
+		id : { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+		crowd_sourcing_id : Sequelize.INTEGER,
+		link_id : { type: Sequelize.INTEGER, references: 'link', referencesKey : 'id' },
+		par_id : { type: Sequelize.INTEGER, references: 'par', referencesKey : 'id' },
+		cs_id : Sequelize.INTEGER,
+		status : Sequelize.INTEGER
+	});
+	
+var ScoreEntity = sequelize.define('entity', {
+		id : { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+		name : Sequelize.STRING,
+		type : Sequelize.INTEGER // 0 -> company, 1 -> product
+	});
 	
 var Score = sequelize.define('score', {
 		score : Sequelize.FLOAT,
-		link_id : {
-			type : Sequelize.INTEGER,
-			references : 'link',
-			referencesKey : 'id'
-		}		
+		entity_id : { type : Sequelize.INTEGER, references : 'entity', referencesKey : 'id' },
+		link_id : { type : Sequelize.INTEGER, references : 'link', referencesKey : 'id' }		
 	});
-		
+	
 Paragraph.hasOne(Link);
+Paragraph.hasOne(Job);
 Result.hasOne(Link);
 Score.hasOne(Link);
 Link.hasMany(Paragraph);
 Link.hasMany(Result);
 Link.hasMany(Score);
+Score.hasOne(ScoreEntity);
+ScoreEntity.hasMany(Score);
+Job.hasOne(Link);
+Job.hasOne(Paragraph);
 
 exports.Score = Score;
 exports.Result = Result;
+exports.Job = Job;
+exports.ScoreEntity = ScoreEntity;
+exports.Score = Score;
 exports.Link = Link;
 exports.Paragraph = Paragraph;
 	

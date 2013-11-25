@@ -1,0 +1,13 @@
+<table class="table table-striped">
+	<tr>
+		<th>ID</th>
+		<th>Name</th>
+		<th>Score</th>
+		<th></th>
+	</tr>
+	<tr ng:repeat="company in companies">
+		<td>{{company.id}}</td>
+		<td>{{company.name}}</td>
+		<td><button class="btn btn-default" ng-click="showScores(company)">View score</button></td>
+	</tr>
+</table>

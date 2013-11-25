@@ -1,37 +1,22 @@
- <h2>{{name}}</h2>
- <div class="row">
-	<table class="table table-striped">
-		<tr>
-			<th>Companies</th>
-			<th>Products</th>
-		</tr>
-		<tr>
-			<td><span ng:repeat="company in result.companies">{{company.name}}</span></td>
-			<td><span ng:repeat="product in result.products">{{product}}</span></td>
-		</tr>
-	</table>
- </div>
- <div class="row article-controls">
-	<div class="col-xs-8">Identify products and companies.</div>
-	<div class="col-xs-4">
-		<button class="btn btn-default">Send to crowd sourcing</button>
+ <h2>{{article.title}}</h2>
+ 
+ <div class="alert alert-info">
+	<strong>Job Management</strong>
+	
+	<div class="button-bar">
+		<button class="btn btn-default" ng-click="startJobs()">Send Jobs to Crowd Sourcing</button>
 	</div>
  </div>
- <div class="row article-controls">
-	<div class="col-xs-8">Send all paragraphs to crowd sourcing</div>
-	<div class="col-xs-4"><button class="btn btn-default">Send all paragraphs</button></div>
- </div>
+ 
  <table class="table table-striped">
 	<tr>
 		<th>ID</th>
 		<th>Text</th>
 		<th>Status</th>
-		<th></th>
 	</tr>
 	<tr ng:repeat="par in pars">
 		<td>{{par.id}}</td>
 		<td>{{par.text}}</td>
 		<td>{{par.status}}</td>
-		<td><button class="btn btn-default">Send to crowd sourcing</button></td>
 	</tr>
  </table>

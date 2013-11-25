@@ -1,0 +1,12 @@
+<table class="table table-striped">
+	<tr>
+		<th>ID</th>
+		<th>Status</th>
+		<th></th>
+	</tr>
+	<tr ng:repeat="task in tasks">
+		<td>{{task.id}}</td>
+		<td>{{task.status}}</td>
+		<td><button class="btn btn-default" ng:click="gotoArticle(task.link_id)">Goto Article</button></td>
+	</tr>
+</table>
