@@ -195,6 +195,8 @@ server.post('/job/', function(req, res, next) {
 			var status = -1,
 				csId = null;
 		
+			console.log('got result', result);
+		
 			result = (typeof result == 'string') ? JSON.parse(result) : result;
 		
 			if(!!result && result.success) {
@@ -212,8 +214,6 @@ server.post('/job/', function(req, res, next) {
 	
 	Job.sync().success(function() {
 		Job.create({ link_id : article.id, par_id : paragraph.id }).success(function(job) {
-			console.log('created job');
-			
 			CrowdSourcing.addTask(paragraph.text, (url + job.id)).always(csCallback(job, article.id, paragraph.id));
 			
 			res.charSet('UTF-8');

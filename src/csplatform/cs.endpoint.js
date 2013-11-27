@@ -21,15 +21,19 @@ function cors(req, res, next) {
 
 
 function createTask(req, res, next) {
-    var taskText = req.params.text;
-    var callback = req.params.callback_url;
+	console.log('got: ', req.body, req.params);
 
+    var taskText = req.body.text;
+    var callback = req.body.callback_url;
+	
     Task.sync().success(function() {
         Task.create({text: taskText, callback: callback}).success(function(task) {
             var taskDeferred = $.Deferred();
 
             TaskParameter.sync().success(function() {
-                req.params.description.forEach(function(par) {
+                var description = req.body.description || [];
+				
+				description.forEach(function(par) {
                     TaskParameter.create({taskId: task.id, title: par.name, type: par.type}).error(function() {
                         console.log("Unable to create task parameter.")
                     });
@@ -49,12 +53,21 @@ function getTaskById(req, res, next) {
 
     TaskParameter.findAll({ where : { taskId : taskId },
                             attributes: ['title', 'type', 'value']}).success(function(taskPars) {
-        var result = {
-            success : true,
-            results : taskPars
-        };
+        
+		if(!!taskPars && taskPars.length > 0) {
+			var result = {
+				success : true,
+				results : taskPars
+			};
 
-        res.send(result);
+			res.send(result);
+		} else {
+			res.send({
+				success : false,
+				error : "No task with id " + taskId + " found."
+			});
+		}
+		
         next();
     }).error(function() {
         var result = {
