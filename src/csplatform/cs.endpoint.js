@@ -34,7 +34,7 @@ function createTask(req, res, next) {
                 var description = req.body.description || [];
 				
 				description.forEach(function(par) {
-                    TaskParameter.create({taskId: task.id, title: par.name, type: par.type}).error(function() {
+                    TaskParameter.create({taskId: task.id, name: par.name, type: par.type}).error(function() {
                         console.log("Unable to create task parameter.")
                     });
                 });
@@ -52,7 +52,7 @@ function getTaskById(req, res, next) {
     var taskId = req.params.id;
 
     TaskParameter.findAll({ where : { taskId : taskId },
-                            attributes: ['title', 'type', 'value']}).success(function(taskPars) {
+                            attributes: ['name', 'type', 'value']}).success(function(taskPars) {
         
 		if(!!taskPars && taskPars.length > 0) {
 			var result = {
