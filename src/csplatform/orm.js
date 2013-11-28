@@ -11,26 +11,21 @@ var sequelize = new Sequelize('main', '', '', {
 });
 
 var Task = sequelize.define('task', {
-    id          : { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
     text        : Sequelize.TEXT,
     callback    : Sequelize.TEXT
 });
 
 
 var TaskParameter = sequelize.define('taskParameter', {
-    id          : { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
     name        : Sequelize.TEXT,
     type        : Sequelize.TEXT,
     value       : Sequelize.TEXT,
-    taskId      : {
-                    type: Sequelize.INTEGER,
-                    references : 'task',
-                    referencesKey: 'id'
-                  }
 });
 
-Task.hasMany(TaskParameter);
-TaskParameter.hasOne(Task);
+Task.hasMany(TaskParameter, {foreignKeyConstraint: true});
+TaskParameter.belongsTo(Task);
 
 exports.Task = Task;
 exports.TaskParameter = TaskParameter;
+
+exports.sequelize = sequelize;

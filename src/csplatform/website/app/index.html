@@ -18,13 +18,26 @@
         <tr>
           <td>ID</td>
           <td>Text</td>
+          <td>Parameters</td>
           <td>Simulate User</td>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="task in tasks">
           <td>{{task.id}}</td>
-          <td>{{task.text}}</Td>
+          <td>{{task.text}}</td>
+          <td>
+            <p>
+            <table class="table table-bordered">
+              <tbody>
+                <tr ng-repeat="par in task.taskParameter">
+                  <td>{{par.name}}</td>
+                  <td>{{par.type}}</td>
+                </tr>
+              </tbody>
+            </table>
+            </p>
+          </td>
           <td><button class="btn btn-default" ng-click="simulateResult(task)">Simulate user result</button></td>
         </tr>
       </tbody>

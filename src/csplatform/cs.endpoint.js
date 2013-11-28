@@ -26,25 +26,19 @@ function createTask(req, res, next) {
     var taskText = req.body.text;
     var callback = req.body.callback_url;
 	
-    Task.sync().success(function() {
-        Task.create({text: taskText, callback: callback}).success(function(task) {
-            var taskDeferred = $.Deferred();
-
-            TaskParameter.sync().success(function() {
-                var description = req.body.description || [];
-				
-				description.forEach(function(par) {
-                    TaskParameter.create({taskId: task.id, name: par.name, type: par.type}).error(function() {
-                        console.log("Unable to create task parameter.")
-                    });
-                });
-                res.send({success: true, task_id: task.id});
-                next();
+    Task.create({text: taskText, callback: callback}).success(function(task) {
+        var description = req.body.description || [];
+        
+        description.forEach(function(par) {
+            TaskParameter.create({taskId: task.id, name: par.name, type: par.type}).error(function() {
+                console.log("Unable to create task parameter.")
             });
-        }).error(function() {
-            res.send({success: false, error: "Unable to create new task."});
-            next();
         });
+        res.send({success: true, task_id: task.id});
+        next();
+    }).error(function() {
+        res.send({success: false, error: "Unable to create new task."});
+        next();
     });
 };
 
@@ -82,16 +76,14 @@ function getTaskById(req, res, next) {
 
 
 function getAllTasks(req, res, next) {
-    Task.sync().success(function() {
-        Task.findAll({ attributes: ['id', 'text', 'callback']}).success(function(tasks) {
-            var result = {
-                success : true,
-                tasks : tasks
-            };
+    Task.findAll({ include: [TaskParameter]}).success(function(tasks) {
+        var result = {
+            success : true,
+            tasks : tasks
+        };
 
-            res.send(result);
-            next();
-        });
+        res.send(result);
+        next();
     });
 };
 
