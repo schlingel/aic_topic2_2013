@@ -2,6 +2,7 @@ var linksUrl = 'http://localhost:12345/articles',
 	jobUrl = 'http://localhost:12345/job',
 	companiesUrl = 'http://localhost:12345/companies',
 	parsUrl = 'http://localhost:12345/pars/:id',
+	scoreablesUrl = 'http://localhost:12345/job/entities/:jobId',
 	scoresUrl = 'http://localhost:12345/entity/scores/:id';
  
  angular.module('tasks', ['ngRoute', 'ngSanitize']).config(function($routeProvider) {
@@ -10,10 +11,33 @@ var linksUrl = 'http://localhost:12345/articles',
 		.when('/items/:id', { templateUrl : './partials/paragraphs.html', controller : ParsCtrl })
 		.when('/tasks/:id', { templateUrl : './partials/jobs.html', controller : JobsCtrl })
 		.when('/tasks', { templateUrl : './partials/jobs.html', controller : JobsCtrl })
+		.when('/scoreables/:jobId', { templateUrl : './partials/scoreables.html', controller : ScoreablesCtrl })
 		.when('/companies', { templateUrl : './partials/companies.html', controller : CompanyCtrl })
 		.when('/score/:entityId', { templateUrl : './partials/score.html', controller : ScoresCtrl})
 		.otherwise({ redirectTo : '/links' });
  });
+ 
+ ScoreablesCtrl.$inject = ['$scope', '$route', '$http', '$location', '$routeParams'];
+ function ScoreablesCtrl($scope, $route, $http, $location, $routeParams) {
+ 	$scope.$route = $route;
+ 	$scope.scoreables = [];
+ 	$scope.showScores = function(scoreable) {
+ 		$location.path('/score/' + scoreable.id);
+ 	};
+ 	$scope.init = function() {
+ 		var jobId = $routeParams.jobId,
+ 			url = scoreablesUrl.replace(':jobId', jobId);
+ 		
+ 		$http.get(url).success(function(result) {
+ 			if(!!result && result.success) {
+ 				$scope.scoreables = result.entities;
+ 			}
+ 		});
+ 		
+ 	};
+ 	
+ 	$scope.init();
+ };
  
  LinksCtrl.$inject = ['$scope', '$route', '$http', '$location'];
  
@@ -46,6 +70,9 @@ var linksUrl = 'http://localhost:12345/articles',
 	$scope.pars = [];
 	$scope.article = null;
 	
+	$scope.showJobs = function() {
+		$location.path('/tasks/' + $scope.article.id);
+	};
 	$scope.startJobs = function() {
 		var jobs = [];
 		
@@ -95,6 +122,11 @@ var linksUrl = 'http://localhost:12345/articles',
 	$scope.tasks = [];
 	$scope.gotoArticle = function(id) {
 		$location.path('/items/' + id);
+	};
+	$scope.gotoResult = function(task) {
+		console.log('Got task: ', task);
+		
+		$location.path('/scoreables/' + task.id);
 	};
 	$scope.init = function() {
 		var id = $routeParams.id,

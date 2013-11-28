@@ -59,6 +59,7 @@ var Score = sequelize.define('score', {
 		link_id : { type : Sequelize.INTEGER, references : 'link', referencesKey : 'id' }		
 	});
 	
+	
 Paragraph.hasOne(Link);
 Paragraph.hasOne(Job);
 Result.hasOne(Link);
@@ -68,8 +69,10 @@ Link.hasMany(Result);
 Link.hasMany(Score);
 Score.hasOne(ScoreEntity);
 ScoreEntity.hasMany(Score);
+ScoreEntity.hasMany(Job);
 Job.hasOne(Link);
 Job.hasOne(Paragraph);
+Job.hasMany(ScoreEntity);
 
 exports.Score = Score;
 exports.Result = Result;

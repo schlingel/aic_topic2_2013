@@ -6,7 +6,7 @@ var orm = require('./orm.js'),
 	Score = orm.Score,
 	$ = require('jquery'),
 	_ = require('underscore'),
-	csUtils = require('./resultfactory.js'),
+	csUtils = require('./csplattform.helper.js'),
 	CrowdSourcing = csUtils.CrowdSourcing,
 	restify = require('restify');
 	
@@ -30,22 +30,27 @@ server.get('/result/:taskId', function(req, res, next) {
 		if(resp && resp.success) {
 			jobStatus = 2;
 		
-			var companies = $.map(resp.results, function(result) { return result.name == 'companies' ? result.value.split(',') : undefined; }),
-				products = $.map(resp.results, function(result) { return result.name == 'products' ? result.value.split(',') : undefined; }),
-				product_scores = $.map(resp.results, function(result) { return result.name == 'product_scores' ? result.value.split(',') : undefined; }),
-				company_scores = $.map(resp.results, function(result) { return result.name == 'company_scores' ? result.value.split(',') : undefined; });
+			console.log('GOT Result: ', resp);
+		
+			var companies = $.map(resp.results, function(result) { return result.title == 'companies' ? result.value.split(',') : undefined; }),
+				products = $.map(resp.results, function(result) { return result.title == 'products' ? result.value.split(',') : undefined; }),
+				product_scores = $.map(resp.results, function(result) { return result.title == 'product_scores' ? result.value.split(',') : undefined; }),
+				company_scores = $.map(resp.results, function(result) { return result.title == 'company_scores' ? result.value.split(',') : undefined; });
 	
 			company_scores = $.map(company_scores, function(score) { return parseFloat(score); });
 			product_scores = $.map(product_scores, function(score) { return parseFloat(score); });
 	
 			function createEntity(index, names, scores, type, job) {
+				console.log('create entity called!');
+				
 				ScoreEntity.sync().success(function() {
 					ScoreEntity.findOrCreate({
 						name : names[index],
 						type : type
 					}).success(function(entity) {
-						console.log('got entity', scores[index], type, names[index]);
-						console.log('');
+						console.log('entities is there!');
+						
+						addToJobToEntityIfNeeded(entity, job);
 					
 						Score.sync().success(function() {
 							Score.create({
@@ -57,12 +62,43 @@ server.get('/result/:taskId', function(req, res, next) {
 							}).error(function(err) {
 								console.log(err);
 							});
+						}).error(function(err) {
+							console.log('score sync does not work!', err);
 						});
+					}).error(function(err) {
+						console.log('Could not find or create entity!', err);
 					});
+				}).error(function(err) {
+					console.log('sync does not work!', err);
 				});
+			};
+			
+			function addToJobToEntityIfNeeded(entity, job) {
+				var isUpdate = true;
+				
+				if(!!job.entity) {
+					job.entity.forEach(function(curEntity) {
+						if(entity.id == curEntity.id) {
+							isUpdate = false;
+						}
+					});
+				}
+				
+				if(isUpdate) {
+					job.addEntity(entity)
+						.success(function() {
+							console.log('Added job to entity!');
+						})
+						.error(function(error) {
+							console.log('Could not add job to entity', job.id, entity.id, error);
+						});
+				}
 			};
 	
 			Job.find({ where : { 'id' : taskId }}).success(function(job) {
+				console.log('companies', companies);
+				console.log('products', products);
+				
 				for(var i = 0, len = companies.length; i < len; i++) {
 					createEntity(i, companies, company_scores, 0, job);
 				}
@@ -70,7 +106,11 @@ server.get('/result/:taskId', function(req, res, next) {
 				for(var i = 0, len = products.length; i < len; i++) {
 					createEntity(i, products, product_scores, 1, job);
 				}			
+			}).error(function(err) {
+				console.log('No job found with id ', taskId)
 			});
+		} else {
+			console.log('Got error', resp);
 		}
 		
 		
@@ -81,6 +121,28 @@ server.get('/result/:taskId', function(req, res, next) {
 	res.send({ success : true });
 	next();
 });
+
+server.get('/job/entities/:jobId', function(req, res, next) {
+	var jobId = req.params.jobId;
+	res.charSet('UTF-8');
+	
+	Job.find({ where : { id : jobId}, include : [ ScoreEntity ]}).success(function(job) {		
+		console.log('Got job for id ', jobId, job);
+		
+		res.send({
+			success : true,
+			products : $.map(job.entity, function(entity) { return entity.dataValues; })
+		});
+		next();
+	}).error(function(err) {
+		res.send({
+			success : false,
+			message : err
+		});
+		next();
+	});
+});
+
 
 server.get('/products', function(req, res, next) {
 	ScoreEntity.findAll({ where: { type : 1 } }).success(function(entities) {
@@ -190,31 +252,37 @@ server.post('/job/', function(req, res, next) {
 		paragraph = params.paragraph,
 		url = serverCfg.url + ':' + serverCfg.port + '/result/';
 	
-	function csCallback(job, articleId, parId) {
+	function csCallback(job, article, parId) {
 		return function(result) {
 			var status = -1,
 				csId = null;
-		
-			console.log('got result', result);
 		
 			result = (typeof result == 'string') ? JSON.parse(result) : result;
 		
 			if(!!result && result.success) {
 				csId = result.task_id;
 				status = 1;
+			} else {
+				console.log('Got an error while creating Job for paragraph', parId, ' and article ', article.id);
+				console.log('    error...', result);
+				
 			}
 			
 			job.status = status;
-			job.cs_id = csId;
+			job.crowd_sourcing_id = csId;
+			job.link_id = article.id;
+			
 			job.save().success(function() {
 				console.log('updated job');
+			}).error(function(err) {
+				console.log('Could not update job!', err);
 			});
 		};
 	};
 	
 	Job.sync().success(function() {
 		Job.create({ link_id : article.id, par_id : paragraph.id }).success(function(job) {
-			CrowdSourcing.addTask(paragraph.text, (url + job.id)).always(csCallback(job, article.id, paragraph.id));
+			CrowdSourcing.addTask(paragraph.text, (url + job.id)).always(csCallback(job, article, paragraph.id));
 			
 			res.charSet('UTF-8');
 			res.send({
