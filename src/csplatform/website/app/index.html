@@ -8,35 +8,28 @@
 </head>
 <body ng-controller="TaskListCtrl">
 
-  <div class="page-header">
-    <h1>Crowdsourcing Platform <small>Simple Prototype</small></h1>
+  <div class="container">
+
+    <div class="page-header">
+      <h1>Crowdsourcing Platform <small>Simple Prototype</small></h1>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>ID</td>
+          <td>Text</td>
+          <td>Simulate User</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="task in tasks">
+          <td>{{task.id}}</td>
+          <td>{{task.text}}</Td>
+          <td><button class="btn btn-default" ng-click="simulateResult(task)">Simulate user result</button></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <td>ID</td>
-        <td>Text</td>
-        <td>Simulate User</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="task in tasks">
-        <td>{{task.id}}</td>
-        <td>{{task.text}}</Td>
-        <td><button class="btn btn-default" ng-click="simulateResult(task)">Simulate user result</button></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <ul>
-    <li ng-repeat="task in tasks">
-      {{task.id}}
-      <p>{{task.text}}</p>
-      <button class="btn btn-default" ng-click="simulateResult(task)">Simulate user result</button>
-    </li>
-  </ul>
-
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
   -->
