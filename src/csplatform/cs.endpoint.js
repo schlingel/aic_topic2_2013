@@ -34,7 +34,7 @@ function createTask(req, res, next) {
                 var description = req.body.description || [];
 				
 				description.forEach(function(par) {
-                    TaskParameter.create({taskId: task.id, title: par.name, type: par.type}).error(function() {
+                    TaskParameter.create({taskId: task.id, name: par.name, type: par.type}).error(function() {
                         console.log("Unable to create task parameter.")
                     });
                 });
@@ -52,7 +52,7 @@ function getTaskById(req, res, next) {
     var taskId = req.params.id;
 
     TaskParameter.findAll({ where : { taskId : taskId },
-                            attributes: ['title', 'type', 'value']}).success(function(taskPars) {
+                            attributes: ['name', 'type', 'value']}).success(function(taskPars) {
         
 		if(!!taskPars && taskPars.length > 0) {
 			var result = {
@@ -100,7 +100,11 @@ function simulateTask(req, res, next) {
     var taskId = req.params.id;
     TaskParameter.findAll({ where : { taskId : taskId}}).success(function(taskPars) {
         taskPars.forEach(function(taskPar) {
-            taskPar.updateAttributes({value: 'Simulated value'});
+            if (taskPar.type == "numeric") {
+                taskPar.updateAttributes({value: Math.random().toString().substring(0, 8)});
+            } else {
+                taskPar.updateAttributes({value: Math.random().toString(36).substring(2, 10)});
+            }
         });
         res.send({success : true});
         next();

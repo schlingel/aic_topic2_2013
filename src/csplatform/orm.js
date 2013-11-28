@@ -19,7 +19,7 @@ var Task = sequelize.define('task', {
 
 var TaskParameter = sequelize.define('taskParameter', {
     id          : { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true},
-    title       : Sequelize.TEXT,
+    name        : Sequelize.TEXT,
     type        : Sequelize.TEXT,
     value       : Sequelize.TEXT,
     taskId      : {
