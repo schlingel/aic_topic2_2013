@@ -100,7 +100,11 @@ function simulateTask(req, res, next) {
     var taskId = req.params.id;
     TaskParameter.findAll({ where : { taskId : taskId}}).success(function(taskPars) {
         taskPars.forEach(function(taskPar) {
-            taskPar.updateAttributes({value: 'Simulated value'});
+            if (taskPar.type == "numeric") {
+                taskPar.updateAttributes({value: Math.random().toString().substring(0, 8)});
+            } else {
+                taskPar.updateAttributes({value: Math.random().toString(36).substring(2, 10)});
+            }
         });
         res.send({success : true});
         next();
