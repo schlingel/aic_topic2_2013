@@ -188,7 +188,7 @@ server.post('/job/', function(req, res, next) {
 	var params = (req.params.article == undefined) ? JSON.parse(req.body) : req.params,
 		article = params.article,
 		paragraph = params.paragraph,
-		url = serverCfg.url + serverCfg.port + '/result/';
+		url = serverCfg.url + ':' + serverCfg.port + '/result/';
 	
 	function csCallback(job, articleId, parId) {
 		return function(result) {

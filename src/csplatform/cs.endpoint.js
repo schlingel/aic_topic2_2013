@@ -81,8 +81,36 @@ function getTaskById(req, res, next) {
 };
 
 
+function getAllTasks(req, res, next) {
+    Task.sync().success(function() {
+        Task.findAll({ attributes: ['id', 'text', 'callback']}).success(function(tasks) {
+            var result = {
+                success : true,
+                tasks : tasks
+            };
+
+            res.send(result);
+            next();
+        });
+    });
+};
+
+
+function simulateTask(req, res, next) {
+    var taskId = req.params.id;
+    TaskParameter.findAll({ where : { taskId : taskId}}).success(function(taskPars) {
+        taskPars.forEach(function(taskPar) {
+            taskPar.updateAttributes({value: 'Simulated value'});
+        });
+        res.send({success : true});
+        next();
+    });
+};
+
 server.get('/tasks/:id', getTaskById);
 server.post('/tasks', createTask);
+server.get('/tasks', getAllTasks);
+server.get('/simulate/:id', simulateTask);
 
 server.listen(serverCfg.port, function() {
     console.log("Listening on port: %d", serverCfg.port);
