@@ -22,7 +22,7 @@ exports.CrowdSourcing = {
 			Job.find({ where : { id : id }}).success(function(job) {
 				var csId = job.crowd_sourcing_id;
 				
-				client.get('/tasks/' + id, function(err, req, res, obj) {
+				client.get('/tasks/' + csId, function(err, req, res, obj) {
 		            if (err) {
 		                deferred.reject(err);
 		            } else {
