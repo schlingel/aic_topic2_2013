@@ -26,32 +26,24 @@ function createTask(req, res, next) {
     var taskText = req.body.text;
     var callback = req.body.callback_url;
 	
-	Task.sync().success(function() {
-		TaskParameter.sync().success(function() {
-		    Task.create({text: taskText, callback: callback}).success(function(task) {
-		        var description = req.body.description || [];
-		        
-		        description.forEach(function(par) {
-		            TaskParameter.findOrCreate({taskId: task.id, name: par.name, type: par.type}).error(function(err) {
-		                console.log("Unable to create task parameter.")
-		                console.log(err)
-		            });
-		        });
-		        res.send({success: true, task_id: task.id});
-		        next();
-		    }).error(function(err) {
-		    	console.log("Couldn't create new task!");
-		    	console.log(err);
-		    	
-		        res.send({success: false, error: "Unable to create new task."});
-		        next();
-		    });
-		});
-	}).error(function() {
-		res.send({success: false, error : "Couldn prepare Database"});
-		next();
-	});
-	
+    Task.create({text: taskText, callback: callback}).success(function(task) {
+        var description = req.body.description || [];
+        
+        description.forEach(function(par) {
+            TaskParameter.findOrCreate({taskId: task.id, name: par.name, type: par.type}).error(function(err) {
+                console.log("Unable to create task parameter.")
+                console.log(err)
+            });
+        });
+        res.send({success: true, task_id: task.id});
+        next();
+    }).error(function(err) {
+        console.log("Couldn't create new task!");
+        console.log(err);
+        
+        res.send({success: false, error: "Unable to create new task."});
+        next();
+    });
 };
 
 function getTaskById(req, res, next) {
