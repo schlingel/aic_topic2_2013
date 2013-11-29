@@ -2,8 +2,10 @@ var orm = require('./orm.js'),
 	Paragraph = orm.Paragraph,
 	Link = orm.Link,
 	Job = orm.Job,
+	JobEntity = orm.JobEntity,
 	ScoreEntity = orm.ScoreEntity,
 	Score = orm.Score,
+	JobEntity = orm.JobEntity,
 	$ = require('jquery'),
 	_ = require('underscore'),
 	csUtils = require('./csplattform.helper.js'),
@@ -32,10 +34,10 @@ server.get('/result/:taskId', function(req, res, next) {
 		
 			console.log('GOT Result: ', resp);
 		
-			var companies = $.map(resp.results, function(result) { return result.title == 'companies' ? result.value.split(',') : undefined; }),
-				products = $.map(resp.results, function(result) { return result.title == 'products' ? result.value.split(',') : undefined; }),
-				product_scores = $.map(resp.results, function(result) { return result.title == 'product_scores' ? result.value.split(',') : undefined; }),
-				company_scores = $.map(resp.results, function(result) { return result.title == 'company_scores' ? result.value.split(',') : undefined; });
+			var companies = $.map(resp.results, function(result) { return result.name == 'companies' ? result.value.split(',') : undefined; }),
+				products = $.map(resp.results, function(result) { return result.name == 'products' ? result.value.split(',') : undefined; }),
+				product_scores = $.map(resp.results, function(result) { return result.name == 'product_scores' ? result.value.split(',') : undefined; }),
+				company_scores = $.map(resp.results, function(result) { return result.name == 'company_scores' ? result.value.split(',') : undefined; });
 	
 			company_scores = $.map(company_scores, function(score) { return parseFloat(score); });
 			product_scores = $.map(product_scores, function(score) { return parseFloat(score); });
@@ -74,25 +76,19 @@ server.get('/result/:taskId', function(req, res, next) {
 			};
 			
 			function addToJobToEntityIfNeeded(entity, job) {
-				var isUpdate = true;
-				
-				if(!!job.entity) {
-					job.entity.forEach(function(curEntity) {
-						if(entity.id == curEntity.id) {
-							isUpdate = false;
-						}
+				JobEntity.sync().success(function() {
+					JobEntity.findOrCreate({
+						job_id : job.id,
+						entity_id : entity.id
+					}).success(function(jobEntity) {
+						console.log('Created link from entity ', entity.id, ' to job ', job.id);
+					}).error(function(err) {
+						console.log('Could not create link from entity ', entity.id, ' to job ', job.id);
 					});
-				}
-				
-				if(isUpdate) {
-					job.addEntity(entity)
-						.success(function() {
-							console.log('Added job to entity!');
-						})
-						.error(function(error) {
-							console.log('Could not add job to entity', job.id, entity.id, error);
-						});
-				}
+					
+				}).error(function(err) {
+					console.log('Could not synchronize job entity table!', err);
+				});
 			};
 	
 			Job.find({ where : { 'id' : taskId }}).success(function(job) {
@@ -126,21 +122,50 @@ server.get('/job/entities/:jobId', function(req, res, next) {
 	var jobId = req.params.jobId;
 	res.charSet('UTF-8');
 	
-	Job.find({ where : { id : jobId}, include : [ ScoreEntity ]}).success(function(job) {		
-		console.log('Got job for id ', jobId, job);
+	JobEntity.sync().success(function() {
+		ScoreEntity.sync().success(function() {
+			JobEntity.findAll({where : { job_id : jobId }}).success(function(jobentity) {
+				
+				if(!!jobentity) {
+					var entityIds = $.map(jobentity, function(value) { return value.entity_id });
+					
+					console.log('got entitie ids: ', entityIds);
+					
+					ScoreEntity.findAll({where: { id : entityIds }}).success(function(entities) {
+						console.log('got entities: ', entities);
+						
+						if(!!entities) {
+							res.charSet('UTF-8');
+							res.send({
+								success : true,
+								entities : $.map(entities, function(entity) { return (!!entity) ? entity.dataValues : undefined; })
+							});
+							
+							next();
+						} else {
+							onError('No entities found');
+						}
+						
+						
+					}).error(onError);
+				} else {
+					onError("job link not found");
+				}
+			}).error(onError);
+		}).error(onError);
+	}).error(onError);
+	
+	function onError(msg) {
+		console.log('Error in job entity lookup: ', msg);
 		
-		res.send({
-			success : true,
-			products : $.map(job.entity, function(entity) { return entity.dataValues; })
-		});
-		next();
-	}).error(function(err) {
+		res.charSet('UTF-8');
 		res.send({
 			success : false,
-			message : err
+			message : msg
 		});
+		
 		next();
-	});
+	};
 });
 
 

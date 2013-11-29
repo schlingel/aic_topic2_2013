@@ -53,6 +53,11 @@ var ScoreEntity = sequelize.define('entity', {
 		type : Sequelize.INTEGER // 0 -> company, 1 -> product
 	});
 	
+var JobEntity = sequelize.define('jobentity', {
+		job_id : Sequelize.INTEGER,
+		entity_id : Sequelize.INTEGER
+	});
+	
 var Score = sequelize.define('score', {
 		score : Sequelize.FLOAT,
 		entity_id : { type : Sequelize.INTEGER, references : 'entity', referencesKey : 'id' },
@@ -69,12 +74,11 @@ Link.hasMany(Result);
 Link.hasMany(Score);
 Score.hasOne(ScoreEntity);
 ScoreEntity.hasMany(Score);
-ScoreEntity.hasMany(Job);
 Job.hasOne(Link);
 Job.hasOne(Paragraph);
-Job.hasMany(ScoreEntity);
 
 exports.Score = Score;
+exports.JobEntity = JobEntity;
 exports.Result = Result;
 exports.Job = Job;
 exports.ScoreEntity = ScoreEntity;

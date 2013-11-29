@@ -29,6 +29,8 @@ var linksUrl = 'http://localhost:12345/articles',
  			url = scoreablesUrl.replace(':jobId', jobId);
  		
  		$http.get(url).success(function(result) {
+ 			console.log('Got entities', result);
+ 			
  			if(!!result && result.success) {
  				$scope.scoreables = result.entities;
  			}
