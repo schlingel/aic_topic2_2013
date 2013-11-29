@@ -88,30 +88,67 @@ function getTaskById(req, res, next) {
 
 
 function getAllTasks(req, res, next) {
-    Task.findAll({ include: [TaskParameter]}).success(function(tasks) {
-        var result = {
-            success : true,
-            tasks : tasks
-        };
-
-        res.send(result);
-        next();
+    Task.sync().success(function() {
+    	TaskParameter.sync().success(function() {
+		    Task.findAll({ include: [TaskParameter]}).success(function(tasks) {
+		        var result = {
+		            success : true,
+		            tasks : tasks
+		        };
+		
+		        res.send(result);
+		        next();
+		    });
+    	});
     });
+    
 };
 
 
 function simulateTask(req, res, next) {
-    var taskId = req.params.id;
+    var taskId = req.params.id,
+    	promises = [],
+    	isSuccess = true;
     TaskParameter.findAll({ where : { taskId : taskId}}).success(function(taskPars) {
         taskPars.forEach(function(taskPar) {
-            if (taskPar.type == "numeric") {
-                taskPar.updateAttributes({value: Math.random().toString().substring(0, 8)});
-            } else {
-                taskPar.updateAttributes({value: Math.random().toString(36).substring(2, 10)});
-            }
+        	var deferred = $.Deferred();
+        	
+        	promises.push(deferred.promise());
+        	
+        	function onSuccess(deferred) {
+        		return function() {
+        			console.log('parameters updated!');
+        			deferred.resolve();
+        		}
+        	};
+        	
+        	function onError(deferred) {
+        		return function(err) {
+        			console.log('got error!', err);
+        			isSuccess = false;
+        			deferred.resolve();
+        		}
+        	};
+        	
+        	var value = (taskPar.type == "numeric") ? Math.random().toString().substring(0, 8) : Math.random().toString(36).substring(2, 10);
+        	
+            taskPar.updateAttributes({value: value})
+            	.success(onSuccess(deferred))
+            	.error(onError(deferred));
         });
-        res.send({success : true});
-        next();
+        
+        if(promises.length > 0) {
+        	$.when.apply(promises).done(function() {
+        		res.send({
+        			success : isSuccess
+        		});
+        		
+	        	next();
+        	});
+        } else {
+	        res.send({success : true});
+	        next();
+        }
     });
 };
 

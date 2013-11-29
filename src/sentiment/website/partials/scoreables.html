@@ -2,11 +2,13 @@
 	<tr>
 		<th>ID</th>
 		<th>Name</th>
+		<th>Type</th>
 		<th></th>
 	</tr>
 	<tr ng:repeat="scoreable in scoreables">
 		<td>{{scoreable.id}}</td>
 		<td>{{scoreable.name}}</td>
+		<td>{{scoreable.typeName}}</td>
 		<td><button class="btn btn-default" ng-click="showScores(scoreable)">View score</button></td>
 	</tr>
 </table>

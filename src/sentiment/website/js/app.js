@@ -32,7 +32,10 @@ var linksUrl = 'http://localhost:12345/articles',
  			console.log('Got entities', result);
  			
  			if(!!result && result.success) {
- 				$scope.scoreables = result.entities;
+ 				$scope.scoreables = $.map(result.entities, function(entity) {
+ 					entity.typeName = entity.type == 1 ? 'product' : 'company';
+  					return entity;
+  				});
  			}
  		});
  		
