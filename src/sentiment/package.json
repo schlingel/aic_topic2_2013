@@ -1,0 +1,17 @@
+{
+    "name": "sentiment",
+    "description": "crowd sourced sentiment analysis",
+    "author": "AIC Team WS 13",
+    "dependencies": {
+        "restify": ">= 2.6",
+        "jquery": ">= 2.0",
+        "underscore" : ">= 1.5",
+        "sequelize" : ">= 1.7",
+        "request" : ">= 2.33"
+    },
+    "repository" : {
+        "type" : "git",
+        "url" : "https://github.com/schlingel/aic_topic2_2013.git"
+    },
+    "engine": "node >= 0.7"
+}
