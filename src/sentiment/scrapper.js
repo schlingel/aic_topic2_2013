@@ -1,5 +1,6 @@
 var orm = require('./orm.js'),
-	$ = require('jquery'),
+    jsdom = require('jsdom'),
+	$ = require('jquery')(jsdom.jsdom().createWindow()),
 	_ = require('underscore'),
 	request = require('request');
 	

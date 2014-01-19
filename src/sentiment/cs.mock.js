@@ -2,7 +2,8 @@ var orm = require('./orm.js'),
 	Paragraph = orm.Paragraph,
 	Link = orm.Link,
 	Job = orm.Job,
-	$ = require('jquery'),
+    jsdom = require('jsdom'),
+	$ = require('jquery')(jsdom.jsdom().createWindow()),
 	_ = require('underscore'),
 	restify = require('restify');
 	

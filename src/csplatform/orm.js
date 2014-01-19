@@ -1,5 +1,6 @@
 var Sequelize = require("sequelize");
-var $ = require('jquery');
+var jsdom = require('jsdom');
+var $ = require('jquery')(jsdom.jsdom().createWindow());
 
 var sequelize = new Sequelize('main', '', '', {
     dialect     : 'sqlite',

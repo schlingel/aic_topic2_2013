@@ -1,6 +1,7 @@
 var restify = require('restify');
 var orm = require('./orm.js');
-var $ = require('jquery');
+var jsdom = require('jsdom');
+var $ = require('jquery')(jsdom.jsdom().createWindow());
 var Task = orm.Task;
 var TaskParameter = orm.TaskParameter;
 

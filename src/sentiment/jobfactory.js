@@ -3,7 +3,8 @@ var orm = require('./orm.js'),
 	Link = orm.Link,
 	_ = require('underscore'),
 	request = require('request'),
-	$ = require('jquery');
+    jsdom = require('jsdom'),
+	$ = require('jquery')(jsdom.jsdom().createWindow());
 	
 var textLenThreshold = 100;
 	
