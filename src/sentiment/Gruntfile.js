@@ -5,11 +5,19 @@ module.exports = function(grunt) {
             jobs : {
                 src : ['jobfactory.js'],
                 options : { cwd : '.'}
+            },
+            tasks : {
+                src : ['tasks.endpoint.js'],
+                options : { cwd : '.' }
+            },
+            scrapper : {
+                src : ['scrapper.js'],
+                options : { cwd : '.' }
             }
         },
         concurrent : {
             run : {
-                tasks : ['execute:jobs'],
+                tasks : ['execute:jobs', 'execute:tasks', 'execute:scrapper'],
                 options : { logConcurrentOutput: true }
             }
         }

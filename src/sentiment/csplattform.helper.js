@@ -5,8 +5,8 @@ var orm = require('./orm.js'),
 	request = require('request'),
 	restify = require('restify'),
 	Result = orm.Result,
-    jsdom = require('jsdom')(jsdom.jsdom().createWindow()),
-	$ = require('jquery');
+    jsdom = require('jsdom'),
+	$ = require('jquery')(jsdom.jsdom().createWindow());
 	
 var crowdSourcingUrl = 'http://localhost:34555';
 var client = restify.createJsonClient({
