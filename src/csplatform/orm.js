@@ -6,6 +6,7 @@ var sequelize = new Sequelize('main', '', '', {
     dialect     : 'sqlite',
     storage     : 'tasks.db',
     omitNull    : true,
+    maxConcurrentQueries : 1000,
     define      : {
         freezeTableName : true
     }

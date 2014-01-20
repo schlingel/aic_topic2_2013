@@ -8,41 +8,75 @@ var orm = require('./orm.js'),
 	
 var TEXT_THRESHOLD_CHARS = 100,
     INTERVALL_MS = 20000;
-	
+
 Paragraph.sync().then(function() {
 	Link.sync().success(function() {
-		createParagraphsLoop();
+	    createParagraphs();
 	});
 });
 
 function createParagraphsLoop() {
-	createParagraphs();
-	
-	setTimeout(function() {
-		createParagraphsLoop();
-	}, INTERVALL_MS);
+	createParagraphs().done(function() {
+        setTimeout(function() {
+            createParagraphsLoop();
+        }, INTERVALL_MS);
+    });
 };
-	
+
+function processUrls(links) {
+    var link = links[0];
+
+    console.log('Processing url [' + link.link + ']')
+
+    scrapUrl(link.link).done(function() {
+        links = links.slice(1);
+
+        if(links.length > 0) {
+            processUrls(links);
+        }
+    });
+};
+
 function createParagraphs() {
+    var promises = [],
+        parDeferred = $.Deferred();
+
 	Link.findAll({ status : 0 }).success(function(links) {
+
+
 		_.each(links, function(link) {
-			var row = link.dataValues;
-			
+			var row = link.dataValues,
+                deferred = $.Deferred();
+
+            function onScrapped() {
+              deferred.resolve();
+            };
+
+            promises.push(deferred.promise());
+
 			scrapUrl(row.link).done(function($paragraphs) {
-				$.map($paragraphs, function(paragraph) {
+				$.each($paragraphs, function(i, paragraph) {
 					var text = $(paragraph).text();
-				
+
 					if(text.length >= TEXT_THRESHOLD_CHARS) {
 						Paragraph.create({
 								text : text,
 								status : 0,
 								link_id : link.id
-						});
-					}					
+						}).done(onScrapped).error(onScrapped);
+					}
 				});
+
+                console.log('did [' + row.link + ']');
 			});
 		});
 	});
+
+    $.when.apply($, promises).done(function() {
+       parDeferred.resolve();
+    });
+
+    return parDeferred.promise();
 };
 	
 function scrapUrl(url) {

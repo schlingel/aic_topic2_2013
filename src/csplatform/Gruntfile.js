@@ -5,7 +5,7 @@ module.exports = function(grunt) {
         execute: {
             service: {
                 src: ['./cs.endpoint.js'],
-                options: { cwd: '../' }
+                options: { cwd: './' }
             }
         },
         concurrent: {
@@ -29,10 +29,14 @@ module.exports = function(grunt) {
         }
     });
 
+    function deleteDb() {
+        grunt.file.delete('./tasks.db');
+    };
 
     grunt.loadNpmTasks('grunt-execute');
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-http-server');
 
     grunt.registerTask('default', ['concurrent:run']);
+    grunt.registerTask('clear', 'Deletes the local DB', deleteDb);
 };

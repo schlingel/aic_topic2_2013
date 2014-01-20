@@ -38,10 +38,15 @@ module.exports = function(grunt) {
         }
     });
 
+    function deleteDb() {
+        grunt.file.delete('aic.tasks');
+    };
+
     grunt.loadNpmTasks('grunt-execute');
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-http-server');
 
     grunt.registerTask('default', ['concurrent:run']);
-    grunt.registerTask('jobs', ['concurrent:job-building'])
+    grunt.registerTask('jobs', ['concurrent:job-building']);
+    grunt.registerTask('clear', 'Deletes the local DB', deleteDb);
 };
