@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         },
         concurrent : {
             run : {
-                tasks : ['execute:tasks', 'http-server:adminsrv'],
+                tasks : ['execute:tasks', 'http-server:adminsrv', 'http-server:searchsrv'],
                 options : { logConcurrentOutput: true }
             },
             'job-building' : {
@@ -29,6 +29,15 @@ module.exports = function(grunt) {
             adminsrv : {
                 root : './website',
                 port : 9123,
+                host : '127.0.0.1',
+                showDir : true,
+                autoIndex : true,
+                defaultExt : 'html',
+                runInBackground : false
+            },
+            searchsrv : {
+                root : './search-website',
+                port : 8080,
                 host : '127.0.0.1',
                 showDir : true,
                 autoIndex : true,

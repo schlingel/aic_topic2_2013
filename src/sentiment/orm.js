@@ -52,16 +52,18 @@ var ScoreEntity = sequelize.define('entity', {
 		name : Sequelize.STRING,
 		type : Sequelize.INTEGER // 0 -> company, 1 -> product
 	});
-	
+
 var JobEntity = sequelize.define('jobentity', {
 		job_id : Sequelize.INTEGER,
 		entity_id : Sequelize.INTEGER
 	});
 	
 var Score = sequelize.define('score', {
+        id : { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
 		score : Sequelize.FLOAT,
 		entity_id : { type : Sequelize.INTEGER, references : 'entity', referencesKey : 'id' },
-		link_id : { type : Sequelize.INTEGER, references : 'link', referencesKey : 'id' }		
+		link_id : { type : Sequelize.INTEGER, references : 'link', referencesKey : 'id' },
+        worker_id : { type: Sequelize.TEXT }
 	});
 	
 	

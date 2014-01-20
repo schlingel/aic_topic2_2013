@@ -24,7 +24,16 @@ var serverCfg = {
 
 server.get('/result/:taskId', function(req, res, next) {
 	var taskId = req.params.taskId;
-	
+
+    function typeFilter(results, filter) {
+        return $.map(results, function(result) {
+           return result.name !== filter ? undefined : {
+                worker_id : result.worker_id,
+                value : result.value.split(',')
+           };
+        });
+    }
+
 	CrowdSourcing.get(taskId).always(function(resp) {
 		var jobStatus = -1;
 		
@@ -33,31 +42,28 @@ server.get('/result/:taskId', function(req, res, next) {
 		if(resp && resp.success) {
 			jobStatus = 2;
 		
-			var companies = $.map(resp.results, function(result) { return result.name == 'companies' ? result.value.split(',') : undefined; }),
-				products = $.map(resp.results, function(result) { return result.name == 'products' ? result.value.split(',') : undefined; }),
-				product_scores = $.map(resp.results, function(result) { return result.name == 'product_scores' ? result.value.split(',') : undefined; }),
-				company_scores = $.map(resp.results, function(result) { return result.name == 'company_scores' ? result.value.split(',') : undefined; });
+			var companies = typeFilter(resp.results, 'companies'),
+				products = typeFilter(resp.results, 'products'),
+				product_scores = typeFilter(resp.results, 'product_scores'),
+                company_scores = typeFilter(resp.results, 'company_scores');
 	
-			company_scores = $.map(company_scores, function(score) { return parseFloat(score); });
-			product_scores = $.map(product_scores, function(score) { return parseFloat(score); });
+			company_scores = $.map(company_scores, function(score) { return { worker_id : score.worker_id, value : parseFloat(score.value) }; });
+			product_scores = $.map(product_scores, function(score) { return { worker_id : score.worker_id, value : parseFloat(score.value) }; });
 	
 			function createEntity(index, names, scores, type, job) {
-				console.log('create entity called!');
-				
 				ScoreEntity.sync().success(function() {
 					ScoreEntity.findOrCreate({
 						name : names[index],
 						type : type
 					}).success(function(entity) {
-						console.log('entities is there!');
-						
 						addToJobToEntityIfNeeded(entity, job);
 					
 						Score.sync().success(function() {
 							Score.create({
-								score: scores[index],
+								score: scores[index].value,
 								entity_id : entity.dataValues.id,
-								link_id : job.link_id
+								link_id : job.link_id,
+                                worker_id : scores[index].worker_id
 							}).success(function(score) {
 								console.log('created score!');
 							}).error(function(err) {
@@ -91,15 +97,12 @@ server.get('/result/:taskId', function(req, res, next) {
 			};
 	
 			Job.find({ where : { 'id' : taskId }}).success(function(job) {
-				console.log('companies', companies);
-				console.log('products', products);
-				
 				for(var i = 0, len = companies.length; i < len; i++) {
-					createEntity(i, companies, company_scores, 0, job);
+					createEntity(i, companies[i].value, company_scores, 0, job);
 				}
 				
 				for(var i = 0, len = products.length; i < len; i++) {
-					createEntity(i, products, product_scores, 1, job);
+					createEntity(i, products[i].value, product_scores, 1, job);
 				}			
 			}).error(function(err) {
 				console.log('No job found with id ', taskId)
