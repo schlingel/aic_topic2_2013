@@ -5,9 +5,7 @@
     "dependencies": {
         "restify": ">= 2.6.x",
         "jquery": ">= 2.0.x",
-        "underscore" : ">= 1.5.x",
         "sequelize" : ">= 1.7.x",
-        "request" : ">= 2.33.x",
         "sqlite3" : ">= 1.0.x",
         "jsdom" : ">= 0.8.x"
     },

@@ -1,10 +1,7 @@
 var orm = require('./orm.js'),
-	Company = orm.Company,
 	_ = require('underscore'),
 	Job = orm.Job,
-	request = require('request'),
 	restify = require('restify'),
-	Result = orm.Result,
     jsdom = require('jsdom'),
 	$ = require('jquery')(jsdom.jsdom().createWindow());
 	

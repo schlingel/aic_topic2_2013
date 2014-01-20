@@ -6,7 +6,8 @@ var orm = require('./orm.js'),
     jsdom = require('jsdom'),
 	$ = require('jquery')(jsdom.jsdom().createWindow());
 	
-var textLenThreshold = 100;
+var TEXT_THRESHOLD_CHARS = 100,
+    INTERVALL_MS = 20000;
 	
 Paragraph.sync().then(function() {
 	Link.sync().success(function() {
@@ -19,7 +20,7 @@ function createParagraphsLoop() {
 	
 	setTimeout(function() {
 		createParagraphsLoop();
-	}, 10000);
+	}, INTERVALL_MS);
 };
 	
 function createParagraphs() {
@@ -31,7 +32,7 @@ function createParagraphs() {
 				$.map($paragraphs, function(paragraph) {
 					var text = $(paragraph).text();
 				
-					if(text.length >= textLenThreshold) {
+					if(text.length >= TEXT_THRESHOLD_CHARS) {
 						Paragraph.create({
 								text : text,
 								status : 0,
