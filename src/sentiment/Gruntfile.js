@@ -13,11 +13,15 @@ module.exports = function(grunt) {
             scrapper : {
                 src : ['scrapper.js'],
                 options : { cwd : '.' }
+            },
+            search : {
+                src : ['search.endpoint.js'],
+                options : { cwd : '.'}
             }
         },
         concurrent : {
             run : {
-                tasks : ['execute:tasks', 'http-server:adminsrv', 'http-server:searchsrv'],
+                tasks : ['execute:tasks', 'execute:search', 'http-server:adminsrv', 'http-server:searchsrv'],
                 options : { logConcurrentOutput: true }
             },
             'job-building' : {
