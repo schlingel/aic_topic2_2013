@@ -17,7 +17,11 @@ module.exports = function(grunt) {
         },
         concurrent : {
             run : {
-                tasks : ['execute:jobs', 'execute:tasks', 'execute:scrapper', 'http-server:adminsrv'],
+                tasks : ['execute:tasks', 'http-server:adminsrv'],
+                options : { logConcurrentOutput: true }
+            },
+            'job-building' : {
+                tasks : ['execute:jobs', 'execute:scrapper'],
                 options : { logConcurrentOutput: true }
             }
         },
@@ -39,4 +43,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-http-server');
 
     grunt.registerTask('default', ['concurrent:run']);
+    grunt.registerTask('jobs', ['concurrent:job-building'])
 };

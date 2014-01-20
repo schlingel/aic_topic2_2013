@@ -33,8 +33,6 @@ server.get('/result/:taskId', function(req, res, next) {
 		if(resp && resp.success) {
 			jobStatus = 2;
 		
-			console.log('GOT Result: ', resp);
-		
 			var companies = $.map(resp.results, function(result) { return result.name == 'companies' ? result.value.split(',') : undefined; }),
 				products = $.map(resp.results, function(result) { return result.name == 'products' ? result.value.split(',') : undefined; }),
 				product_scores = $.map(resp.results, function(result) { return result.name == 'product_scores' ? result.value.split(',') : undefined; }),

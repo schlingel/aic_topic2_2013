@@ -21,6 +21,7 @@ var TaskParameter = sequelize.define('taskParameter', {
     name        : Sequelize.TEXT,
     type        : Sequelize.TEXT,
     value       : Sequelize.TEXT,
+    worker      : Sequelize.TEXT // user id = sha1 hex code as string
 });
 
 Task.hasMany(TaskParameter, {foreignKeyConstraint: true});
