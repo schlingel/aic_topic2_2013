@@ -3,10 +3,41 @@ body {
     background-image: url(../img/people.png);
     background-position: center top;
     background-repeat: no-repeat;
+    font-family: 'Open Sans Condensed', sans-serif !important;
+}
+
+h1 {
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+#search-results > div > h1 {
+    font-size: 24px;
+}
+
+#search-results > div h2 {
+    font-size: 22px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    border-bottom: 1px solid black;
+}
+
+#footer {
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 1px solid #555555;
+    margin-top: 30px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    text-align: center;
+    padding-top: 6px;
+    margin-bottom: 20px;
 }
 
 .header {
     text-align: center;
+}
+
+.jqplot-target {
+    margin-bottom: 60px;
 }
 
 .search-box {
@@ -16,6 +47,7 @@ body {
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+    font-family: 'Open Sans Condensed', sans-serif;
 }
 
 #search-results {
