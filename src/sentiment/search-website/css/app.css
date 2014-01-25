@@ -18,6 +18,13 @@ body {
     margin-bottom: 20px;
 }
 
+#search-results {
+    width: 80%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .search-box .btn-info {
     margin-top: 10px;
 }

@@ -33,8 +33,6 @@
             .done(function(resp) {
                 var isSuccess = !!resp && resp.success;
 
-                console.log('got result : ', resp);
-
                 if(isSuccess) {
                     self.callOnResult(resp.result);
                 } else {

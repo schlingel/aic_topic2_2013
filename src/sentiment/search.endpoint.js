@@ -64,7 +64,7 @@ function mockedResponse(name) {
                     type : 'default',
                     score : 0.49,
                     sections : [{ // sections können z.B. verwendet werden um Ergebnisse in Monats/Quartals/Jahresabschnitten zusammen zu fassen
-                        description : '2014-01',
+                        description : '2013-11',
                         values : [
                             0.13,
                             0.87,
@@ -100,7 +100,7 @@ function mockedResponse(name) {
                         ]
                     },
                     { // sections können z.B. verwendet werden um Ergebnisse in Monats/Quartals/Jahresabschnitten zusammen zu fassen
-                        description : '2013-11',
+                        description : '2014-01',
                         values : [
                             0.34,
                             0.98,
