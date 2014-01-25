@@ -31,15 +31,67 @@ $(document).ready(function() {
         var graphId = 'graph_' + (new Date()).getTime(),
             $container = $('<div>')
                             .append($('<h2>').text(normalizedScore.type))
-                            .append($('<span>').text('Score: ' + normalizedScore.score)),
+                            .append(createScore(normalizedScore)),
             $result = $('<div>').appendTo($container),
             $graph = $('<div>').attr('id', graphId).appendTo($container);
 
         $target.append($container);
 
+
         createGraph(normalizedScore, graphId);
 
         return $container;
+    };
+
+    function createScore(normalizedScore, target) {
+        var $entry = $('<div>').addClass('score'),
+            width = normalizedScore.score * 100,
+            style = width + '%';
+
+        console.log('width: ', style);
+
+        $entry.append($('<div>').append($('<strong>').text('Score : ' + normalizedScore.score)).append($('<br>')).append($('<span>').text(alertText(normalizedScore.score))).addClass('alert').addClass(alertScoreClass(normalizedScore.score)));
+        $entry.append($('<div>').addClass('progress').append($('<div>')
+            .attr('role', 'progressbar')
+            .attr('aria-valuenow', width)
+            .attr('aria-valuemin', '0')
+            .attr('aria-valuemax', '100')
+            .addClass('progress-bar')
+            .addClass(scoreClass(normalizedScore.score))
+            .css('width', style)
+            .append($('<span>').addClass('sr-only'))));
+
+        return $entry;
+    };
+
+    function scoreClass(score) {
+        if(score < 0.33) {
+            return 'progress-bar-danger';
+        } else if(score < 0.6) {
+            return 'progress-bar-warning';
+        } else {
+            return 'progress-bar-success';
+        }
+    }
+
+    function alertScoreClass(score) {
+        if(score < 0.33) {
+            return 'alert-danger';
+        } else if(score < 0.6) {
+            return 'alert-warning';
+        } else {
+            return 'alert-success';
+        }
+    };
+
+    function alertText(score) {
+        if(score < 0.33) {
+            return 'Be careful. The majority of the analyzation crowd does not trust this.';
+        } else if(score < 0.6) {
+            return 'There is no negative or positive major oppinion.';
+        } else {
+            return 'Looks good to our crowd.';
+        }
     };
 
     function createGraph(normalizedScore, graphId) {
