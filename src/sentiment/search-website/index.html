@@ -3,11 +3,10 @@
 	<head>
 		<title></title>
 		<script src="js/jquery-1.10.2.min.js" type="text/javascript"></script>
-		<script src="js/angular.js" type="text/javascript"></script>
-		<script src="js/angular-route.js" type="text/javascript"></script>
-		<script src="js/angular-sanitize.js" type="text/javascript"></script>
+        <script src="js/jquery.autocomplete.js" type="text/javascript"></script>
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="js/app.js" type="text/javascript"></script>
+        <script src="js/viewmodel.js" type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/app.css">
 	</head>
@@ -16,10 +15,11 @@
 	
 		<div class="search-box">
             <div class="form-group">
-                <input type="text" name="search-input"  class="form-control" />
+                <input type="text" name="search-input"  class="form-control" id="search-input" />
             </div>
 
-            <button class="btn btn-info">Search</button>
+            <button id="btn-search" class="btn btn-info">Search</button>
 		</div>
+        <div id="search-results"></div>
 	</body>
 </html>

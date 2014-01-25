@@ -24,3 +24,13 @@ body {
 
 .search-box .form-control {
 }
+
+.autocomplete-suggestion {
+    background-color: #ffffff;
+    height: 30px;
+    line-height: 30px;
+}
+
+.autocomplete-selected {
+    background-color: #f2f2f2;
+}

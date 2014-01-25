@@ -1,5 +1,6 @@
 var orm = require('./orm.js'),
     _ = require('underscore'),
+    ScoreEntity = orm.ScoreEntity,
     restify = require('restify');
 
 var server = restify.createServer(),
@@ -30,6 +31,29 @@ server.get('/lookup/:name', function(req, res, next) {
     next();
 });
 
+server.get('/autocomplete/:term', function(req, res, next) {
+    var term = req.params.term,
+        queryParam = '%' + term + '%';
+
+    res.charSet('UTF-8');
+
+    ScoreEntity.findAll({ where : [ 'name like ?', queryParam ]}).success(function(entities) {
+        res.send({
+           success : true,
+           result : {
+               terms : _.uniq(_.map(entities, function(entity) { return entity.name; }))
+           }
+        });
+        next();
+    }).error(function() {
+        res.send({
+            success : false,
+            error : 'Could not fetch data'
+        });
+        next();
+    });
+});
+
 function mockedResponse(name) {
     return {
         success : true,
@@ -38,6 +62,7 @@ function mockedResponse(name) {
             normalizedScores : [
                 {
                     type : 'default',
+                    score : 0.49,
                     sections : [{ // sections können z.B. verwendet werden um Ergebnisse in Monats/Quartals/Jahresabschnitten zusammen zu fassen
                         description : '2014-01',
                         values : [
@@ -55,7 +80,44 @@ function mockedResponse(name) {
                             0.32,
                             0.32
                         ]
-                    }] // es könnten auch mehrere sections vorhanden sein
+                    },
+                    { // sections können z.B. verwendet werden um Ergebnisse in Monats/Quartals/Jahresabschnitten zusammen zu fassen
+                        description : '2013-12',
+                        values : [
+                            0.32,
+                            0.58,
+                            0.23,
+                            0.34,
+                            0.53,
+                            0.23,
+                            0.76,
+                            0.35,
+                            0.75,
+                            0.23,
+                            0.98,
+                            0.34,
+                            0.32
+                        ]
+                    },
+                    { // sections können z.B. verwendet werden um Ergebnisse in Monats/Quartals/Jahresabschnitten zusammen zu fassen
+                        description : '2013-11',
+                        values : [
+                            0.34,
+                            0.98,
+                            0.34,
+                            0.52,
+                            0.64,
+                            0.82,
+                            0.93,
+                            0.22,
+                            0.53,
+                            0.90,
+                            0.23,
+                            0.11,
+                            0.91
+                        ]
+                    }
+                    ] // es könnten auch mehrere sections vorhanden sein
                 } // hier könnten noch weitere scores kommen, z.B. für Rentabilität, etc.
             ]
         }
