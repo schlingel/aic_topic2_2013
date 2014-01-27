@@ -1,3 +1,20 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{cswww}
+R.~R. Anhai~Doan and A.~Y. Halevy.
+\newblock Crowdsourcing systems on the world-wide web.
+\newblock {\em http://delivery.acm.org/10.1145/1930000/1924442/p86-doan.pdf}.
+
+\bibitem{future}
+M.~S. B. E. M. G. A. S. J. Z. M.~L. Aniket~Kittur, Jeffrey V.~Nickerson and
+  J.~J. Horton.
+\newblock The future of crowd work.
+\newblock {\em
+  http://hci.stanford.edu/publications/2013/CrowdWork/futureofcrowdwork-cscw2013.pdf}.
+
+\bibitem{r}
+E.~Hiltunen.
+\newblock Crowdsourcing the future: The foresight process at finpro.
+\newblock {\em www.jfs.tku.edu.tw/16-1/R02.pdf}.
 
 \end{thebibliography}

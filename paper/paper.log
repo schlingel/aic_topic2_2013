@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.12.20)  22 JAN 2014 15:57
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.12.20)  27 JAN 2014 21:08
 entering extended mode
-**C:/Users/xatrixx/Desktop/uni/aic/aic/paper/paper.tex
-(C:/Users/xatrixx/Desktop/uni/aic/aic/paper/paper.tex
+**C:/Users/xatrixx/Desktop/uni/aic/aic/aic_topic2_2013/paper/paper.tex
+(C:/Users/xatrixx/Desktop/uni/aic/aic/aic_topic2_2013/paper/paper.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -13,7 +13,7 @@ german-x-2012-05-30, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
 ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
 an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
 ishmax, welsh, loaded.
-(C:\Users\xatrixx\Desktop\uni\aic\aic\paper\sig-alternate.cls
+(C:\Users\xatrixx\Desktop\uni\aic\aic\aic_topic2_2013\paper\sig-alternate.cls
 ("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\epsfig.sty"
 Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
 
@@ -195,7 +195,7 @@ LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
 ("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\ae\t1aer.fd"
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))
-(C:\Users\xatrixx\Desktop\uni\aic\aic\paper\paper.aux)
+(C:\Users\xatrixx\Desktop\uni\aic\aic\aic_topic2_2013\paper\paper.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
 LaTeX Font Info:    ... okay on input line 3.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
@@ -242,53 +242,74 @@ LaTeX Font Info:    Try loading font information for T1+aett on input line 33.
 ("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\ae\t1aett.fd"
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
-
-LaTeX Warning: Citation `cswww' on page \thepage  undefined on input line 35.
-
-
-LaTeX Warning: Citation `cswww' on page \thepage  undefined on input line 40.
-
-
-Overfull \hbox (3.34485pt too wide) in paragraph at lines 39--41
-[]\T1/aer/m/n/9 Crowdsourcing Sys-tems are on the rise, yet defin-ing Crowd-
+Overfull \hbox (9.04173pt too wide) in paragraph at lines 39--41
+[]\T1/aer/m/n/9 Crowdsourcing Sys-tems are on the rise, yet de-sign-ing Crowd-
  []
 
 
-Overfull \hbox (18.1874pt too wide) in paragraph at lines 59--63
-[]\T1/aer/m/n/9 An in-ter-est-ing ex-am-ple is http://www.freelancer.com/contes
-t/
+Overfull \hbox (4.66068pt too wide) in paragraph at lines 73--76
+[]\T1/aer/m/n/9 Motivation is the main chal-lenge in Crowd-sourc-ing. Crowd-
  []
 
-(C:\Users\xatrixx\Desktop\uni\aic\aic\paper\paper.bbl) [1{C:/Users/xatrixx/AppD
-ata/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
+[1{C:/Users/xatrixx/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
 ]
-(C:\Users\xatrixx\Desktop\uni\aic\aic\paper\paper.aux) ) 
+Overfull \hbox (6.91902pt too wide) in paragraph at lines 96--100
+[]\T1/aer/m/n/9 A very straight for-ward ex-am-ple is http://crowdflower.com/
+ []
+
+
+Overfull \hbox (39.25594pt too wide) in paragraph at lines 103--107
+[]\T1/aer/m/n/9 Another in-ter-est-ing ex-am-ple is http://www.freelancer.com/c
+ontest/
+ []
+
+
+Overfull \hbox (2.51883pt too wide) in paragraph at lines 121--122
+[]\T1/aer/m/n/9 What can we ex-pect from fu-ture Crowd-sourc-ing plat-forms? 
+ []
+
+(C:\Users\xatrixx\Desktop\uni\aic\aic\aic_topic2_2013\paper\paper.bbl
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [2]
+Overfull \hbox (1.09709pt too wide) in paragraph at lines 4--7
+\T1/aer/m/it/9 http://delivery.acm.org/10.1145/1930000/1924442/p86- 
+ []
+
+
+Overfull \hbox (74.0239pt too wide) in paragraph at lines 9--14
+\T1/aer/m/it/9 http://hci.stanford.edu/publications/2013/CrowdWork/futureofcrow
+dwork- 
+ []
+
+) [3
+
+] (C:\Users\xatrixx\Desktop\uni\aic\aic\aic_topic2_2013\paper\paper.aux) ) 
 Here is how much of TeX's memory you used:
- 2448 strings out of 493921
- 29385 string characters out of 3144869
- 84471 words of memory out of 3000000
- 5694 multiletter control sequences out of 15000+200000
- 54593 words of font info for 75 fonts, out of 3000000 for 9000
+ 2444 strings out of 493921
+ 29527 string characters out of 3144869
+ 88480 words of memory out of 3000000
+ 5695 multiletter control sequences out of 15000+200000
+ 51843 words of font info for 70 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 41i,12n,28p,490b,314s stack positions out of 5000i,500n,10000p,200000b,50000s
-{D:/Program Files (x86)
-/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<D:/Program Files (x86)/MiKTeX 2.9/
-fonts/type1/public/amsfonts/cm/cmbx9.pfb><D:/Program Files (x86)/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmti7.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmti9.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmtt9.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/helvet
-ic/uhvb8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8
-a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><D:/P
-rogram Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmbi8a.pfb><D:/Program Fil
-es (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb>
-Output written on paper.pdf (1 page, 128663 bytes).
+ 41i,12n,28p,506b,314s stack positions out of 5000i,500n,10000p,200000b,50000s
+{D:/P
+rogram Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<D:/Program Files
+ (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files (x
+86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files (x86)/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files (x86)/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><D:/Program Files (x86)/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><D:/Program Files (x86)/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmtt9.pfb><D:/Program Files (x86)/MiKTeX 2.9/f
+onts/type1/urw/helvetic/uhvb8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/typ
+e1/urw/helvetic/uhvr8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/t
+imes/utmb8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a
+.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (3 pages, 145444 bytes).
 PDF statistics:
- 55 PDF objects out of 1000 (max. 8388607)
+ 57 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,5 +1,27 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: paper.aux
 The style file: abbrv.bst
 Database file #1: sigproc.bib
-Warning--I didn't find a database entry for "cswww"
-(There was 1 warning)
+Name 1 in "Aniket Kittur, Jeffrey V. Nickerson, Michael S. Bernstein, Elizabeth M. Gerber, Aaron Shaw, John Zimmerman, Matthew Lease, and John J. Horton" has a comma at the end for entry future
+while executing---line 1049 of file abbrv.bst
+Too many commas in name 1 of "Aniket Kittur, Jeffrey V. Nickerson, Michael S. Bernstein, Elizabeth M. Gerber, Aaron Shaw, John Zimmerman, Matthew Lease, and John J. Horton" for entry future
+while executing---line 1049 of file abbrv.bst
+Too many commas in name 1 of "Aniket Kittur, Jeffrey V. Nickerson, Michael S. Bernstein, Elizabeth M. Gerber, Aaron Shaw, John Zimmerman, Matthew Lease, and John J. Horton" for entry future
+while executing---line 1049 of file abbrv.bst
+Too many commas in name 1 of "Aniket Kittur, Jeffrey V. Nickerson, Michael S. Bernstein, Elizabeth M. Gerber, Aaron Shaw, John Zimmerman, Matthew Lease, and John J. Horton" for entry future
+while executing---line 1049 of file abbrv.bst
+Too many commas in name 1 of "Aniket Kittur, Jeffrey V. Nickerson, Michael S. Bernstein, Elizabeth M. Gerber, Aaron Shaw, John Zimmerman, Matthew Lease, and John J. Horton" for entry future
+while executing---line 1049 of file abbrv.bst
+Warning--empty year in cswww
+Name 1 in "Aniket Kittur, Jeffrey V. Nickerson, Michael S. Bernstein, Elizabeth M. Gerber, Aaron Shaw, John Zimmerman, Matthew Lease, and John J. Horton" has a comma at the end for entry future
+while executing---line 1090 of file abbrv.bst
+Too many commas in name 1 of "Aniket Kittur, Jeffrey V. Nickerson, Michael S. Bernstein, Elizabeth M. Gerber, Aaron Shaw, John Zimmerman, Matthew Lease, and John J. Horton" for entry future
+while executing---line 1090 of file abbrv.bst
+Too many commas in name 1 of "Aniket Kittur, Jeffrey V. Nickerson, Michael S. Bernstein, Elizabeth M. Gerber, Aaron Shaw, John Zimmerman, Matthew Lease, and John J. Horton" for entry future
+while executing---line 1090 of file abbrv.bst
+Too many commas in name 1 of "Aniket Kittur, Jeffrey V. Nickerson, Michael S. Bernstein, Elizabeth M. Gerber, Aaron Shaw, John Zimmerman, Matthew Lease, and John J. Horton" for entry future
+while executing---line 1090 of file abbrv.bst
+Too many commas in name 1 of "Aniket Kittur, Jeffrey V. Nickerson, Michael S. Bernstein, Elizabeth M. Gerber, Aaron Shaw, John Zimmerman, Matthew Lease, and John J. Horton" for entry future
+while executing---line 1090 of file abbrv.bst
+Warning--empty year in future
+Warning--empty year in r
+(There were 10 error messages)
