@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.12.20)  27 JAN 2014 21:08
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.12.20)  27 JAN 2014 21:39
 entering extended mode
 **C:/Users/xatrixx/Desktop/uni/aic/aic/aic_topic2_2013/paper/paper.tex
 (C:/Users/xatrixx/Desktop/uni/aic/aic/aic_topic2_2013/paper/paper.tex
@@ -223,57 +223,50 @@ LaTeX Font Info:    ... okay on input line 3.
 \makeMPintoPDFobject=\count114
 \everyMPtoPDFconversion=\toks37
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 32.
+LaTeX Font Info:    Try loading font information for U+msa on input line 28.
  ("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 32.
+LaTeX Font Info:    Try loading font information for U+msb on input line 28.
 
 ("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 32.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 28.
 
 ("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ulasy.fd"
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Try loading font information for T1+aett on input line 33.
-
-("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\ae\t1aett.fd"
-File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-)
-Overfull \hbox (9.04173pt too wide) in paragraph at lines 39--41
+Overfull \hbox (9.04173pt too wide) in paragraph at lines 35--37
 []\T1/aer/m/n/9 Crowdsourcing Sys-tems are on the rise, yet de-sign-ing Crowd-
  []
 
 
-Overfull \hbox (4.66068pt too wide) in paragraph at lines 73--76
-[]\T1/aer/m/n/9 Motivation is the main chal-lenge in Crowd-sourc-ing. Crowd-
+Overfull \hbox (8.46738pt too wide) in paragraph at lines 38--41
+[]\T1/aer/m/n/9 This pa-per will de-scribe what Crowd-sourc-ing ac-tu-ally mean
+s
  []
 
 [1{C:/Users/xatrixx/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 
 ]
-Overfull \hbox (6.91902pt too wide) in paragraph at lines 96--100
+Overfull \hbox (6.91902pt too wide) in paragraph at lines 110--114
 []\T1/aer/m/n/9 A very straight for-ward ex-am-ple is http://crowdflower.com/
  []
 
 
-Overfull \hbox (39.25594pt too wide) in paragraph at lines 103--107
+Overfull \hbox (39.25594pt too wide) in paragraph at lines 117--121
 []\T1/aer/m/n/9 Another in-ter-est-ing ex-am-ple is http://www.freelancer.com/c
 ontest/
  []
 
 
-Overfull \hbox (2.51883pt too wide) in paragraph at lines 121--122
+Overfull \hbox (2.51883pt too wide) in paragraph at lines 135--136
 []\T1/aer/m/n/9 What can we ex-pect from fu-ture Crowd-sourc-ing plat-forms? 
  []
 
-(C:\Users\xatrixx\Desktop\uni\aic\aic\aic_topic2_2013\paper\paper.bbl
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [2]
+[2] (C:\Users\xatrixx\Desktop\uni\aic\aic\aic_topic2_2013\paper\paper.bbl
 Overfull \hbox (1.09709pt too wide) in paragraph at lines 4--7
 \T1/aer/m/it/9 http://delivery.acm.org/10.1145/1930000/1924442/p86- 
  []
@@ -288,28 +281,26 @@ dwork-
 
 ] (C:\Users\xatrixx\Desktop\uni\aic\aic\aic_topic2_2013\paper\paper.aux) ) 
 Here is how much of TeX's memory you used:
- 2444 strings out of 493921
- 29527 string characters out of 3144869
- 88480 words of memory out of 3000000
- 5695 multiletter control sequences out of 15000+200000
- 51843 words of font info for 70 fonts, out of 3000000 for 9000
+ 2412 strings out of 493921
+ 29079 string characters out of 3144869
+ 88010 words of memory out of 3000000
+ 5675 multiletter control sequences out of 15000+200000
+ 47535 words of font info for 61 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 41i,12n,28p,506b,314s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,12n,28p,422b,314s stack positions out of 5000i,500n,10000p,200000b,50000s
 {D:/P
 rogram Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<D:/Program Files
- (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files (x
-86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files (x86)/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files (x86)/MiK
-TeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><D:/Program Files (x86)/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><D:/Program Files (x86)/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmtt9.pfb><D:/Program Files (x86)/MiKTeX 2.9/f
-onts/type1/urw/helvetic/uhvb8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/typ
-e1/urw/helvetic/uhvr8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/t
-imes/utmb8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmr8a
-.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (3 pages, 145444 bytes).
+ (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files (x8
+6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files (x86)/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><D:/Program Files (x86)/MiK
+TeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/
+fonts/type1/urw/helvetic/uhvr8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/ty
+pe1/urw/times/utmb8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/tim
+es/utmr8a.pfb><D:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.
+pfb>
+Output written on paper.pdf (3 pages, 107339 bytes).
 PDF statistics:
- 57 PDF objects out of 1000 (max. 8388607)
+ 45 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
