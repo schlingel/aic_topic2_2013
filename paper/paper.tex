@@ -36,7 +36,7 @@ With Crowdsourcing transforming to the web, a new field rises. \cite{cswww}
 Still, the prime examples of the Crowdsourcing (CS) paradigm are Wikipedia, 
 Linux, Yahoo! Answers and Mechanical Turk-based systems.
 
-Crowdsourcing Systems are on the rise, yet defining Crowdsourcing systems turns out to be
+Crowdsourcing Systems are on the rise, yet designing Crowdsourcing systems turns out to be
 surprisingly tricky \cite{cswww}.
 
 This article will give some insight on what is state of the art on Crowdsourcing Systems and
@@ -51,10 +51,18 @@ Crowdsourcing - Instead of using lots of computational power to solve complex ta
 
 \section{Introduction}
 
+Crowdsourcing is a modern approach of solving tasks of different complexity. This paradigm is successful because it is surprisingly computationally easy, but requires a crowd 
+of human workers instead. While not being entirely trivial to design, they are (seemingly) easier to implement than complex algorithms and services.
+
+The tricky part is to design a good crowdsourcing platform instead of just 'a' crowdsourcing platform. 
+This paper gives some overview about the state of the art of crowdsourcing systems and what challenges we are currently facing. 
+What the reader will probably find interesting is the section about the future of crowdsourcing systems, since crowdsourcing is a pretty new paradigm and we do not know yet what 
+we have to be prepared for.
+
 \section{State of the Art}
 
-To analyse the state of the art of Crowdsourcing, a good start is looking at some existing Crowdsourcing systems.
-There is a wide variety of them, also aiming in totally different directions.
+In this section we describe the state of the art of crowdsourcing in general. We do not only want to show some modern example platforms, but also more general address
+the challenges modern crowdsourcing platforms are currently facing.
 
 \subsection{Challenges}
 
@@ -82,6 +90,9 @@ Let them know about the quality of their work or they probably will not be doing
 
 \subsection{Example Platforms}
 
+To analyse the state of the art of Crowdsourcing, a good start is looking at some existing Crowdsourcing systems.
+There is a wide variety of them, also aiming in totally different directions.
+
 A very straight forward example is http://crowdflower.com/ .
 They advertise with: 'There's No Limit to What CrowdFlower Can Do - Just Ask Our Customers'.
 CrowdFlower provide a platform to submit any work, which will be tackled by 5 million skilled contributors from all around the world.
@@ -98,10 +109,66 @@ This already shows the possibilities of Crowdsourcing. It is by no means limited
 Everyone can register as freelancer and participate in the contest, and the task also does not have to be trivial for humans, but can also be complex.
 
 
+To sum the examples up, some crowdsourcing approach that uses experts only is http://www.trada.com/ .
+This site offers a service to customers in the terms of: 'You pay us, and we will assign experts that you can lean on, while maintaining full control of your campaign, but gaining
+improved performance'. What this platform internally does: It has a crowd of experts and for each incoming customer campaign, they assign a set of those experts that is suited best
+for the task. So this system has a strong emphasize on choosing the best set of workers for a given problem, generally spoken. 
+This example platform was chosen to point out that it is not that simple to deploy a crowdsourcing platform, by simple assigning a ton of workers to a given job and letting them solve it.
+If your crowd consists of experts, you especially want to make sure to assign the correct people for a given work to minimize your costs.
 
 \section{Future}
 
 What can we expect from future Crowdsourcing platforms?
+
+\cite{future} predicts an unsure future for this paradigm. We cannot forsee what will happen in these dynamics of the internet. However, they have compiled
+a list of key challenges to be addressed, given Crowdsourcing evolves. It is believed that it won't be simple, deskilled tasks to be solved any longer. The focus is to be prepared for complex crowd source / crowd work processes. The key challenges are:  
+
+\paragraph{Workflow}
+We can no longer assume that a simple, parallel approach will be enough for the crowdsourcing future. Complex tasks can be seen as small projects:
+They have requirements (that are dynamic), require experts from different fields and have all sorts of dependencies.
+This is why it will be extra important to be able to divide tasks into subtasks and reassemble results. We have to be prepared for this completely new design 
+space of crowdsourcing workflows.
+
+\paragraph{Task Assignment}
+
+We have to be very cautious about designing a system that assigns tasks in a certain way. Coordination is needed when sharing resources come into play.
+Tasks might have deadlines, and the pool of workers might be fixed. Different problems arise, for example how to design task queues. 
+Traditionally, workers sort tasks by volume and recency. We should be open for new assignment algorithms. An upcoming technique is 
+an algorithm that dynamically forms teams based on expertise. 
+
+Also keep in mind, that the requirements about the assignments will be tougher in future. Of course, Customers want their tasks to be solved very quickly.
+But also the workers want to be continuously fed with tasks that match their expertise/interests.
+
+\paragraph{Hierarchy}
+
+Hierarchies are a system well known from traditional organizations and companies in general. Hierarchies enable coordination, quality control, decision making, and incorporate sanctions and incentives.
+
+We haven't taken hierarchies in consideration for crowdsourcing so far, but having a hierarchy of workers could make it possible to enable a whole new level of tasks in terms of complexity. It might allow to design completely new workflows, and enable to form teams instead of individual workers. Again, 
+it cannot be forseen how this will turn out.
+
+\paragraph{Realtime Crowd Work}
+
+As already mentioned in Task Assignment, task requirements will get tighter. Work with very short completion time will definitely be a topic.
+An idea to tackle this problem could be 'flash crowds'. Individuals that arrive just moments after a request has arrived, working synchronously for this task.
+Currently, crowd tasks can take hours and days, simply because short completion time tasks are tackled too late and coordination is not well enough yet.
+
+\paragraph{Synchronous Collaboration}
+
+So far, Crowdsourcing is still laid out to be seen as work that is tackled by a mass of individuals. We cannot expect that to be the solution forever.
+Cooperation is key for complex tasks, and is crutial with tasks that have shorter timescales. We also should not forget that there will be cultural and 
+socioeconomic gaps that should be coordinated, and this is by no means a trivial task. Coordination cannot be simply integrated in todays crowdsourcing systems, because they are not designed for this yet.
+
+\paragraph{Quality Control}
+
+Current Quality control systems in crowd sourcing are not well enough designed. They can be fooled, and workers see it as an issue rather than a feature. For them, it's like a penalty system.
+Since in future everything is forseen to be fast paced and complex, quality control has to be taken care of, or the quality of the work might sink very fast.
+When workers are forced to deliver high throughput and solve complex tasks, they tend to drop quality. How a future Quality Control system may be designed is hard to predict, but we shouldn't take quality control as given and invest a lot of research work into this topic.
+
+
+
+
+
+
 
 
 %
