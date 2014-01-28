@@ -23,19 +23,22 @@ To avoid problems with AMD 64 builds install the x86 version of node.
 ##Setup steps
 
 In both the csplatform and sentiment directory run
->$npm install
+>$ npm install
+
 to install all the modules.
 
 To get some articles, split them up and put them into the DB:
 > sentiment$ node scrapper.js
+
 > sentiment$ node jobfacrory.js
 
 To start the websites and REST services:
 > sentiment$ grunt
+
 > csplatform$ grunt
 
 If grunt complains about missing plugins, just install them with
->npm install
+> npm install
 
 
 #Task Management
