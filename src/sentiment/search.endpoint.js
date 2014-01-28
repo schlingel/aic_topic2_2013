@@ -33,29 +33,79 @@ server.get('/lookup/:name', function(req, res, next) {
     ScoreEntity.find({ where : { name : name}}).success(function(entity) {
         Score.findAll({ where : { entity_id : entity.id}}).success(function(scores) {
             var calculatedScore = 0.0;
-            for (var i = 0; i < scores.length; i++) {
-                calculatedScore += scores[i].score;
-            }
-            if (scores.length > 0) {
-                calculatedScore /= scores.length;
+            var upperWhisker = 0.0;
+            var lowerWhisker = 0.0;
+
+            // Only dismiss outlier if we have more than 15 values
+            if (scores.length < 10) {
+                for (var i = 0; i < scores.length; i++) {
+                    calculatedScore += scores[i].score;
+                }
+                if (scores.length > 0) {
+                    calculatedScore /= scores.length;
+                }
+            } else {
+                // Build a list with the score values and order it
+                var rawScores = [];
+                for (var i = 0; i < scores.length; i++) {
+                    rawScores.push(scores[i].score);
+                }
+                rawScores.sort(function(a,b) {return a - b;});
+
+                // Get both quartiles
+                var i25 = Math.floor(0.25 * scores.length);
+                var i75 = Math.floor(0.75 * scores.length);
+
+                var p25 = (rawScores[i25] + rawScores[i25 + 1]) / 2;
+                var p75 = (rawScores[i75] + rawScores[i75 + 1]) / 2;
+                var quartilDif = 1.5 * (p75 - p25);
+                upperWhisker = p75 + quartilDif;
+                lowerWhisker = p25 - quartilDif;
+                console.log('Entity: ' + entity.name +
+                        ', Upper whisker: ' + upperWhisker + ', lower whisker: ' + lowerWhisker);
+
+                // Only allow values which are in the box
+                var filteredScores = [];
+                for (var i = 0; i < rawScores.length; i++) {
+                    if (rawScores[i] < upperWhisker && rawScores[i] > lowerWhisker) {
+                        filteredScores.push(rawScores[i]);
+                    }
+                }
+                
+                for (var i = 0; i < filteredScores.length; i++) {
+                    calculatedScore += filteredScores[i];
+                }
+                calculatedScore /= filteredScores.length;
+
             }
 
-            // This query will retrieve summed up scores (inkl count) grouped by month, for the last year.
-            sequelize.query("select " +
+            var queryString = "select " +
                                 "strftime('%m', s.createdAt) as month, " +
                                 "strftime('%Y', s.createdAt) as year, " +
                                 "count(s.score) as count, " +
                                 "sum(s.score) as sum " +
                             "from score s " +
-                            "where entity_id = " + entity.id + 
-                            " group by year, month " +
-                            "order by year asc, month asc " +
-                            "limit 12").success(function(scoresPerMonth) {
+                            "where entity_id = ? "; 
+            if (upperWhisker > 0) {
+                queryString += "and s.score > ? ";
+                queryString += "and s.score < ? ";
+            }
+            queryString += " group by year, month " +
+                           "order by year asc, month asc " +
+                           "limit 12";
+
+            // This query will retrieve summed up scores (inkl count) grouped by month, for the last year.
+            sequelize.query(queryString, null, {raw: true}, [entity.id, lowerWhisker, upperWhisker]).success(
+                    function(scoresPerMonth) {
                 var sections = [];
                 for (i = 0; i < scoresPerMonth.length; i++) {
                     var score = scoresPerMonth[i];
+                    var value = 0.0;
+                    if (score.count > 0) {
+                        value = score.sum / score.count;
+                    }
                     sections.push({ description : score.year + '-' + score.month,
-                        values : [score.sum / score.count]});
+                        values : [value]});
                 }
                 res.send({
                     success : true,

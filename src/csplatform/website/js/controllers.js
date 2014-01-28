@@ -9,11 +9,10 @@ crowdApp.controller('TaskListCtrl', ['$scope', '$http', '$route', function ($sco
     $scope.simulateResult = function(task) {
         $http.get(simulateUrl + task.id).success(function() {
             $http.get(task.callback).success(function(result) {
-                $http.put(taskUrl, {task_id: task.id, status: 1}).success(function(result) {
-                    if (result && result.success) {
-                        alert("Successfull!");
-                    }
-                });
+                if (result && result.success) {
+                    alert("Successfull!");
+                }
+                $http.put(taskUrl, {task_id: task.id, status: 1});
             });
         });
     };
