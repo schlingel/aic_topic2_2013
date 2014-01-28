@@ -8,6 +8,7 @@ var TaskParameter = orm.TaskParameter;
 var server = restify.createServer();
 server.use(restify.bodyParser());
 server.use(cors);
+server.use(restify.queryParser());
 
 var serverCfg = {
     url     : 'http://localhost',
@@ -27,7 +28,7 @@ function createTask(req, res, next) {
     var taskText = req.body.text;
     var callback = req.body.callback_url;
 	
-    Task.create({text: taskText, callback: callback}).success(function(task) {
+    Task.create({text: taskText, callback: callback, status: 0}).success(function(task) {
         var description = req.body.description || [];
         
         description.forEach(function(par) {
@@ -81,9 +82,17 @@ function getTaskById(req, res, next) {
 
 
 function getAllTasks(req, res, next) {
+    var status = req.query.status;
+    var findQuery = {};
+    if (status != null) {
+        findQuery = { where: {status: status}, include: [TaskParameter]};
+    } else {
+        findQuery = { include: [TaskParameter]};
+    }
+
     Task.sync().success(function() {
     	TaskParameter.sync().success(function() {
-		    Task.findAll({ include: [TaskParameter]}).success(function(tasks) {
+		    Task.findAll(findQuery).success(function(tasks) {
 		        var result = {
 		            success : true,
 		            tasks : tasks
@@ -167,8 +176,23 @@ function simulateTask(req, res, next) {
     });
 };
 
+
+function updateTaskStatus(req, res, next) {
+    var taskId = req.body.task_id;
+    var newStatus = req.body.status;
+
+    Task.find(taskId).success(function(task) {
+        task.updateAttributes({status: newStatus}).success(function() {
+            res.send({ success: true });
+            next();
+        });
+    });
+};
+
+
 server.get('/tasks/:id', getTaskById);
 server.post('/tasks', createTask);
+server.put('/tasks', updateTaskStatus);
 server.get('/tasks', getAllTasks);
 server.get('/simulate/:id', simulateTask);
 

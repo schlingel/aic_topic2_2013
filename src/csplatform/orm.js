@@ -14,7 +14,8 @@ var sequelize = new Sequelize('main', '', '', {
 
 var Task = sequelize.define('task', {
     text        : Sequelize.TEXT,
-    callback    : Sequelize.TEXT
+    callback    : Sequelize.TEXT,
+    status      : Sequelize.INTEGER
 });
 
 

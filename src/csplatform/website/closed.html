@@ -14,8 +14,8 @@
       <h1>Crowdsourcing Platform <small>Simple Prototype</small></h1>
     </div>
     <ul class="nav nav-tabs">
-      <li class="active"><a href="index.html">Open tasks</a></li>
-      <li><a href="closed.html">Finished tasks</a></li>
+      <li><a href="index.html">Open tasks</a></li>
+      <li class="active"><a href="closed.html">Finished tasks</a></li>
     </ul>
     <table class="table table-striped">
       <thead>
@@ -23,11 +23,10 @@
           <td>ID</td>
           <td>Text</td>
           <td>Parameters</td>
-          <td>Simulate User</td>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="task in tasks">
+        <tr ng-repeat="task in finishedTasks">
           <td>{{task.id}}</td>
           <td>{{task.text}}</td>
           <td>
@@ -37,13 +36,11 @@
                 <tr ng-repeat="par in task.taskParameter">
                   <td>{{par.name}}</td>
                   <td>{{par.type}}</td>
+                  <td>{{par.value}}</td>
                 </tr>
               </tbody>
             </table>
             </p>
-          </td>
-          <td>
-            <button class="btn btn-default" ng-click="simulateResult(task)">Simulate user result</button>
           </td>
         </tr>
       </tbody>
