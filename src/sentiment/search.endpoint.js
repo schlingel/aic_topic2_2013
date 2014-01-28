@@ -37,7 +37,7 @@ server.get('/lookup/:name', function(req, res, next) {
             var lowerWhisker = 0.0;
 
             // Only dismiss outlier if we have more than 15 values
-            if (scores.length < 10) {
+            if (scores.length < 15) {
                 for (var i = 0; i < scores.length; i++) {
                     calculatedScore += scores[i].score;
                 }
@@ -164,75 +164,6 @@ server.get('/autocomplete/:term', function(req, res, next) {
     });
 });
 
-function mockedResponse(name) {
-    return {
-        success : true,
-        result : {
-            item : name,
-            normalizedScores : [
-                {
-                    type : 'default',
-                    score : 0.49,
-                    sections : [{ // sections können z.B. verwendet werden um Ergebnisse in Monats/Quartals/Jahresabschnitten zusammen zu fassen
-                        description : '2013-11',
-                        values : [
-                            0.13,
-                            0.87,
-                            0.11,
-                            0.05,
-                            0.12,
-                            0.09,
-                            0.93,
-                            0.74,
-                            0.45,
-                            0.67,
-                            0.98,
-                            0.32,
-                            0.32
-                        ]
-                    },
-                    { // sections können z.B. verwendet werden um Ergebnisse in Monats/Quartals/Jahresabschnitten zusammen zu fassen
-                        description : '2013-12',
-                        values : [
-                            0.32,
-                            0.58,
-                            0.23,
-                            0.34,
-                            0.53,
-                            0.23,
-                            0.76,
-                            0.35,
-                            0.75,
-                            0.23,
-                            0.98,
-                            0.34,
-                            0.32
-                        ]
-                    },
-                    { // sections können z.B. verwendet werden um Ergebnisse in Monats/Quartals/Jahresabschnitten zusammen zu fassen
-                        description : '2014-01',
-                        values : [
-                            0.34,
-                            0.98,
-                            0.34,
-                            0.52,
-                            0.64,
-                            0.82,
-                            0.93,
-                            0.22,
-                            0.53,
-                            0.90,
-                            0.23,
-                            0.11,
-                            0.91
-                        ]
-                    }
-                    ] // es könnten auch mehrere sections vorhanden sein
-                } // hier könnten noch weitere scores kommen, z.B. für Rentabilität, etc.
-            ]
-        }
-    };
-};
 
 /**
  * Soll das selbe wie /lookup/:name zurückgeben, allerdings nur für Firmen
