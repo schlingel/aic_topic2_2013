@@ -1,6 +1,8 @@
 var orm = require('./orm.js'),
     _ = require('underscore'),
     ScoreEntity = orm.ScoreEntity,
+    Score = orm.Score,
+    sequelize = orm.sequelize;
     restify = require('restify');
 
 var server = restify.createServer(),
@@ -27,8 +29,66 @@ server.get('/lookup/:name', function(req, res, next) {
     var name = req.params.name;
 
     res.charSet('UTF-8');
-    res.send(mockedResponse(name));
-    next();
+
+    ScoreEntity.find({ where : { name : name}}).success(function(entity) {
+        Score.findAll({ where : { entity_id : entity.id}}).success(function(scores) {
+            var calculatedScore = 0.0;
+            for (var i = 0; i < scores.length; i++) {
+                calculatedScore += scores[i].score;
+            }
+            if (scores.length > 0) {
+                calculatedScore /= scores.length;
+            }
+
+            // This query will retrieve summed up scores (inkl count) grouped by month, for the last year.
+            sequelize.query("select " +
+                                "strftime('%m', s.createdAt) as month, " +
+                                "strftime('%Y', s.createdAt) as year, " +
+                                "count(s.score) as count, " +
+                                "sum(s.score) as sum " +
+                            "from score s " +
+                            "where entity_id = " + entity.id + 
+                            " group by year, month " +
+                            "order by year asc, month asc " +
+                            "limit 12").success(function(scoresPerMonth) {
+                var sections = [];
+                for (i = 0; i < scoresPerMonth.length; i++) {
+                    var score = scoresPerMonth[i];
+                    sections.push({ description : score.year + '-' + score.month,
+                        values : [score.sum / score.count]});
+                }
+                res.send({
+                    success : true,
+                    result : {
+                        item : name,
+                        normalizedScores : [{
+                            type : 'Default',
+                            score : calculatedScore,
+                            sections : sections 
+                        }]
+                    }
+                });
+                next();
+            }).error(function() {
+                res.send({
+                    success : false,
+                    error : 'Unable to load scores per month.'
+                });
+            });
+
+        }).error(function() {
+            res.send({
+                success : false,
+                error : 'Unable to load associated scores!'
+            });
+        });
+    }).error(function() {
+        res.send({
+            success : false,
+            error : 'Unable to retrieve data for ' + name
+        });
+        next();
+    });
 });
 
 server.get('/autocomplete/:term', function(req, res, next) {

@@ -83,6 +83,7 @@ exports.Score = Score;
 exports.JobEntity = JobEntity;
 exports.Result = Result;
 exports.Job = Job;
+exports.sequelize = sequelize;
 exports.ScoreEntity = ScoreEntity;
 exports.Score = Score;
 exports.Link = Link;
